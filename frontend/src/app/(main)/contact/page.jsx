@@ -175,7 +175,7 @@ const Contact = () => {
                       >
                         Submit
                         <svg
-                          className="shrink-0 size-4 transition group-hover:translate-x-0.5 group-hover:translate-x-0 group-focus:translate-x-0.5 group-focus:translate-x-0"
+                          className="shrink-0 size-4 transition group-hover:translate-x-0.5 group-focus:translate-x-0.5"
                           xmlns="http://www.w3.org/2000/svg"
                           width={24}
                           height={24}

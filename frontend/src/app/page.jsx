@@ -1,24 +1,13 @@
-// import React from 'react'
-
-// const Home = () => {
-//   return (
-//     <div> 
-//       <h1 class='font-bold text-center text-5xl'>Home Page </h1>
-//       <br />
-
-//         <h3 class='text-center'> Work Under Progress !!</h3>
-//     </div>
-//   )
-// }
-
-// export default Home;
 import React from 'react'
 import Navbar from './(main)/Navbar';
+
 
 const Home = () => {
   return (
     <div>
       <Navbar />
+      
+
       <>
   {/* Hero */}
   <div className="bg-linear-to-b from-violet-600/10 via-transparent">

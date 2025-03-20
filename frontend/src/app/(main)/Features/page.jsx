@@ -2,10 +2,10 @@ import { IconBoltFilled, IconSend } from "@tabler/icons-react"
 
 export default () => {
 
-    
+
     const features = [
-        
-        
+
+
         {
             icon: <IconBoltFilled />,
             title: "Generate Custom Template",
@@ -29,23 +29,23 @@ export default () => {
 
     return (
         <section className="relative py-28 bg-gray-900" id="features">
+            <div className="md:mb-24 "><h2 className=" mb-4 text-center text-8xl font-bold text-white md:mb-6 lg:text-6xl ">Features Section</h2> </div>
             <div className="relative z-10 max-w-screen-xl mx-auto px-4 text-gray-300 justify-between gap-24 lg:flex md:px-8">
                 <div className="max-w-xl">
                     <h3 className="text-white text-5xl font-semibold sm:text-4xl">
                         Do more with less complexity
                     </h3>
                     <p className="mt-3">
-                        
+
                     </p>
                 </div>
                 <div className="mt-12 lg:mt-0 ">
-                {/* <div className=" "><h2 className=" mb-4 text-center text-8xl font-bold text-white md:mb-6 lg:text-6xl ">Features Section</h2> </div> */}
                     <ul className="grid gap-8 sm:grid-cols-2">
                         {
                             features.map((item, idx) => (
                                 <li key={idx} className="flex gap-x-4">
                                     <div className="flex-none w-12 h-12 bg-gray-700 text-cyan-400 rounded-lg flex items-center justify-center">
-                                        {item.icon} 
+                                        {item.icon}
                                     </div>
                                     <div>
                                         <h4 className="text-lg text-gray-100 font-semibold">

@@ -123,7 +123,7 @@ const Navbar = () => {
                 <div>
                   <Link
                     className="inline-block text-white hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
-                    href="/pricing"
+                    href="#pricing"
                     
                   >
                     Pricing

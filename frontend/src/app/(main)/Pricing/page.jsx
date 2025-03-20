@@ -1,9 +1,9 @@
 import { IconCircleCheckFilled } from '@tabler/icons-react';
 import React from 'react'
 
-const   Pricing = () => {
+const Pricing = () => {
     return (
-        <div>
+        <section id='#pricing'>
             <div className="bg-gray-900 py-6 sm:py-8 lg:py-12 ">
                 <div className="mx-auto max-w-screen-lg px-4 md:px-8">
                     {/* <!-- text - start --> */}
@@ -135,7 +135,7 @@ const   Pricing = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
 

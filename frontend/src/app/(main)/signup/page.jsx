@@ -3,9 +3,9 @@ import React from 'react'
 const Signup = () => {
   return (
     
-    <div >
-      <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-2xs max-w-lg mx-auto">
-  <div className="p-4 sm:p-7">
+    <div className= 'bg-gray-900 bg-linear-to-b from-violet-900/10 via-transparent relative py-20'>
+      <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-2xs max-w-lg mx-auto  ">
+  <div className="p-4 sm:p-7 ">
     <div className="text-center">
       <h1 className="block text-2xl font-bold text-gray-800">Sign up</h1>
       <p className="mt-2 text-sm text-gray-600">

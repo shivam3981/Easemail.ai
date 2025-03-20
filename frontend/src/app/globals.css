@@ -1,2 +1,9 @@
 @import "tailwindcss";
-@source "node_modules/preline/dist";
+/* @source "node_modules/preline/dist"; */
+
+
+/* .bg-contact{
+    background-image: ;
+} */
+
+/* @custom-variant dark (&:where(.dark, .dark *)); */

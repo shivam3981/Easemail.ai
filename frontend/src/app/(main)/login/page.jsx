@@ -2,6 +2,7 @@ import React from 'react'
 
 const Login = () => {
   return (
+    <main className="relative py-20 bg-gray-900 bg-linear-to-b from-violet-900/10 via-transparent">
     <div>
       <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-2xs max-w-lg mx-auto">
   <div className="p-4 sm:p-7">
@@ -84,6 +85,7 @@ const Login = () => {
 </div>
     </div>
 
+    </main>
   )
 }
 

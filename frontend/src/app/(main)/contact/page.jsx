@@ -1,3 +1,4 @@
+import { IconPhone } from '@tabler/icons-react';
 import React from 'react'
 
 const Contact = () => {
@@ -254,21 +255,9 @@ const Contact = () => {
                 {/* End Item */}
                 {/* Item */}
                 <div className="flex gap-x-5">
-                  <svg
-                    className="shrink-0 size-6 text-neutral-500"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={24}
-                    height={24}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="m3 11 18-5v12L3 14v-3z" />
-                    <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
-                  </svg>
+                  
+                
+                  <IconPhone className="shrink-0 size-6 text-neutral-500" />
                   <div className="grow">
                     <h4 className="text-white font-semibold">Phone Number</h4>
                     <p className="mt-1 text-neutral-400">
@@ -314,3 +303,4 @@ const Contact = () => {
 }
 
 export default Contact;
+

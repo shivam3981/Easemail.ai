@@ -1,31 +1,40 @@
-import React from 'react'
+import Link from 'next/link';
+import React from 'react';
 
 const Navbar = () => {
   return (
-    <div>
+    <div className=" bg-gray-900 bg-linear-to-b from-violet-900/10 via-transparent">
       <>
         {/* ========== HEADER ========== */}
         <header className="flex flex-wrap lg:justify-start lg:flex-nowrap z-50 w-full py-7 ">
           <nav className="relative max-w-7xl w-full flex flex-wrap lg:grid lg:grid-cols-12 basis-full items-center px-4 md:px-6 lg:px-8 mx-auto">
             <div className="lg:col-span-3 flex items-center">
 
-
-              <div className="font-bold  text-5xl "> EaseMail.ai</div>
+            <Link href={"/"}>
+              <div className="font-bold  text-5xl cursor-pointer text-white"> EaseMail.ai</div>
+            </Link>
             </div>
             {/* Button Group */}
             <div className="flex items-center gap-x-1 lg:gap-x-2 ms-auto py-1 lg:ps-6 lg:order-3 lg:col-span-3">
+              <Link href={"/login"}>
               <button
+              
                 type="button"
                 className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl bg-white border border-gray-200 text-black hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
               >
-                Sign in
+                Login
               </button>
+              </Link>
+
+              <Link href={"/signup"}>
               <button
                 type="button"
                 className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl border border-transparent bg-black text-white hover:bg-black focus:outline-hidden focus:bg-black transition disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
               >
-                Get Started
+                SignUp
               </button>
+              </Link>
+
               <div className="lg:hidden">
                 <button
                   type="button"
@@ -79,45 +88,46 @@ const Navbar = () => {
             >
               <div className="flex flex-col gap-y-4 gap-x-0 mt-5 lg:flex-row lg:justify-center lg:items-center lg:gap-y-0 lg:gap-x-7 lg:mt-0">
                 <div>
-                  <a
+                  {/* <Link
                     className="relative inline-block text-black focus:outline-hidden before:absolute before:bottom-0.5 before:start-0 before:-z-1 before:w-full before:h-1 before:bg"
-                    href="#"
+                    href="/"
                     aria-current="page"
                   >
                     Home
-                  </a>
+                  </Link> */}
                 </div>
                 <div>
-                  <a
-                    className="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
-                    href="#"
+                  <Link
+                    className="inline-block text-white hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
+                    href="#features"
                   >
-                    Services
-                  </a>
+                    Features 
+                  </Link>
                 </div>
                 <div>
-                  <a
-                    className="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
-                    href="#"
+                  <Link
+                    className="inline-block text-white hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
+                    href="/about"
                   >
                     About
-                  </a>
+                  </Link>
                 </div>
                 <div>
-                  <a
-                    className="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
-                    href="#"
+                  <Link
+                    className="inline-block text-white hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
+                    href="/contact"
                   >
-                    Careers
-                  </a>
+                    Contact
+                  </Link>
                 </div>
                 <div>
-                  <a
-                    className="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
-                    href="#"
+                  <Link
+                    className="inline-block text-white hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
+                    href="/pricing"
+                    
                   >
                     Pricing
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

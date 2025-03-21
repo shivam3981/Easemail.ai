@@ -24,17 +24,20 @@ const About = () => {
               </p>
               <p className="mb-6 text-gray-800 sm:text-lg md:mb-8"> <br />
 
-                Writing emails can be time-consuming, repetitive, and challenging, especially when dealing with different tones, formats, and industry-specific requirements. Many professionals struggle with structuring emails, maintaining a formal tone, and ensuring clarity. <br />
-                <b className='text-2xl font-bold text-blue-700'> Easemail.ai </b> is a one-stop solution designed to generate well-structured email templates, with seamless Gmail integration, users can send emails directly from the platform and automate follow-up replies, reducing manual effort and increasing response rates. <br />
-                By leveraging <b className='font-bold'>Natural Language Processing (NLP) </b> and <b className='font-bold'>AI-driven customization</b>, <b className='font-bold'>Easemail.ai</b> ensures that every email maintains a consistent tone, aligns with industry-specific requirements, and accurately reflects the sender's intent. Whether for job applications, client outreach, or business correspondence, Easemail.ai optimizes email writing, saving time and improving engagement. <br />
-                With features like <b className='font-bold'>grammar correction, tone adjustments, and email tracking</b>, the platform provides a complete email management solution, helping users communicate more efficiently and professionally.
-                This AI-powered tool will optimize email communication, ensuring efficiency and consistency.
-
-                <br />
+                Writing emails can be time-consuming, repetitive, and challenging, especially when dealing with different tones, formats, and industry-specific requirements. Many professionals struggle with structuring emails, maintaining a formal tone, and ensuring clarity. <i> <br />
+                <b className='text-2xl font-bold text-blue-700'> Easemail.ai </b> </i> is a one-stop solution designed to generate well-structured email templates, with seamless Gmail integration, users can send emails directly from the platform and automate follow-up replies, reducing manual effort and increasing response rates. <br />
                 <br />
 
 
+                <p className="text-center font-bold text-black md:text-left text-5xl">
+                  Team
+                </p>
+                <p className="mb-6 text-gray-800 sm:text-lg md:mb-8"> <br />
 
+                Our team at <i> <b className='text-2xl font-bold text-blue-700'> Easemail.ai </b> 
+                </i> is a group of passionate professionals dedicated to making the lives of both professionals and individuals easier. We are a team of developers, designers, and marketers working together to make the world a better place.<br />
+                </p>
+                <br />
               </p>
 
             </div>

@@ -97,12 +97,12 @@ const Navbar = () => {
                   </Link> */}
                 </div>
                 <div>
-                  <Link
+                  {/* <Link
                     className="inline-block text-white hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
                     href="#features"
                   >
                     Features 
-                  </Link>
+                  </Link> */}
                 </div>
                 <div>
                   <Link
@@ -121,13 +121,13 @@ const Navbar = () => {
                   </Link>
                 </div>
                 <div>
-                  <Link
+                  {/* <Link
                     className="inline-block text-white hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
-                    href="#pricing"
+                    href="#Pricing"
                     
                   >
                     Pricing
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>

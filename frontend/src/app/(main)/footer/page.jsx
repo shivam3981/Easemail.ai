@@ -1,4 +1,4 @@
-import { IconBrandFacebook, IconBrandGithubFilled, IconBrandTwitter, IconCopyright } from '@tabler/icons-react';
+import { IconBrandFacebook, IconBrandGithub, IconBrandTwitter, IconCopyright } from '@tabler/icons-react';
 import Link from 'next/link';
 import React from 'react'
 
@@ -10,14 +10,14 @@ const footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-5  ">
                     <div >
                         <a
-                            className="flex-none text-3xl font-semibold text-black focus:outline-hidden"
+                            className="flex-none text-4xl font-semibold text-black focus:outline-hidden"
                             href="#"
                             aria-label="Brand"
                         >
                             EaseMail.ai
                         </a>
-                        <IconCopyright/> 
-                        <span>2025 All right reserved </span>
+                        <span><IconCopyright /></span>
+                        2025 All right reserved 
                     </div>
                     {/* End Col */}
                     <ul className="text-center">
@@ -34,7 +34,7 @@ const footer = () => {
                                 className="inline-flex gap-x-2 text-sm text-gray-500 hover:text-black focus:outline-hidden focus:text-gray-800"
                                 href="#features"
                             >
-                                Features 
+                                Features
                             </Link>
                         </li>
                         <li className="inline-block relative pe-8 last:pe-0 last-of-type:before:hidden before:absolute before:top-1/2 before:end-3 before:-translate-y-1/2 before:content-['/'] before:text-gray-300">
@@ -42,7 +42,7 @@ const footer = () => {
                                 className="inline-flex gap-x-2 text-sm text-gray-500 hover:text-black focus:outline-hidden focus:text-gray-800"
                                 href="/contact"
                             >
-                                Contact 
+                                Contact
                             </Link>
                         </li>
                     </ul>
@@ -53,21 +53,21 @@ const footer = () => {
                             className="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
                             href="#"
                         >
-                            <IconBrandFacebook/>
+                            <IconBrandFacebook />
                         </a>
                         <a
                             className="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
                             href="#"
                         >
-                        <IconBrandTwitter/>
+                            <IconBrandTwitter />
                         </a>
                         <a
                             className="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
                             href="#"
                         >
-                            <IconBrandGithubFilled/>
+                            <IconBrandGithub />
                         </a>
-                    
+
                     </div>
                     {/* End Social Brands */}
                 </div>

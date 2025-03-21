@@ -16,8 +16,10 @@ const footer = () => {
                         >
                             EaseMail.ai
                         </a>
+                        <div className="flex items-center gap-2 mt-2 text-gray-500">
                         <span><IconCopyright /></span>
                         2025 All right reserved 
+                        </div>
                     </div>
                     {/* End Col */}
                     <ul className="text-center">

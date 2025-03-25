@@ -1,6 +1,23 @@
+'use client';
+import { useFormik } from 'formik';
 import React from 'react'
 
 const Signup = () => {
+
+  const signupForm = useFormik({
+    initialValues: {
+      email : '',
+      password : '',
+      ConfirmPassword : '',
+    },
+    onSubmit:(values)=>{
+      console.log(values);
+
+      // send values to backend 
+      
+    }
+
+  })
   return (
     
     <div className= 'bg-gray-900 bg-linear-to-b from-violet-900/10 via-transparent relative py-20'>
@@ -30,13 +47,17 @@ const Signup = () => {
       <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">Or</div>
 
       {/* Form */}
-      <form>
+      <form onSubmit={ signupForm.handleSubmit}>
         <div className="grid gap-y-4">
           {/* Form Group */}
           <div>
             <label htmlFor="email" className="block text-sm mb-2">Email address</label>
             <div className="relative">
-              <input type="email" id="email" name="email" className="py-2.5 sm:py-3 px-4 block w-full
+              <input type="email" 
+              id="email" 
+              onChange={ signupForm.handleChange}
+              value={ signupForm.values.email }
+              className="py-2.5 sm:py-3 px-4 block w-full
               border border-gray-800 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="email-error" />
               <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                 <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -52,7 +73,11 @@ const Signup = () => {
           <div>
             <label htmlFor="password" className="block text-sm mb-2">Password</label>
             <div className="relative">
-              <input type="password" id="password" name="password" className="py-2.5 sm:py-3 px-4 block w-full border border-gray-800 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="password-error" />
+              <input type="password" 
+              id="password" 
+              onChange={ signupForm.handleChange}
+              value={ signupForm.values.password }
+              className="py-2.5 sm:py-3 px-4 block w-full border border-gray-800 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="password-error" />
               <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                 <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
@@ -67,7 +92,11 @@ const Signup = () => {
           <div>
             <label htmlFor="confirm-password" className="block text-sm mb-2">Confirm Password</label>
             <div className="relative">
-              <input type="password" id="confirm-password" name="confirm-password" className="py-2.5 sm:py-3 px-4 block w-full border border-gray-800 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="confirm-password-error" />
+              <input type="password" 
+              id="ConfirmPassword" 
+              onChange={ signupForm.handleChange}
+              value={ signupForm.values.ConfirmPassword }
+              className="py-2.5 sm:py-3 px-4 block w-full border border-gray-800 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="confirm-password-error" />
               <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                 <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>

@@ -1,5 +1,7 @@
 const express = require('express');
 const Model = require("../models/UserModel");
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const router = express.Router();
 router.post('/add', (req, res) => {
@@ -83,6 +85,38 @@ router.put('/update/:id', (req, res) => {
         });
 });
 
+router.post('/authenticate', (req,res) => {
+    Model.findOne(req.body)
+    .then((result) => {
+        if(result){
+            //login success - generate token
+
+            const{_id,name,email} = result;
+            const payload = {_id,name,email};
+
+            jwt.sign(
+                payload,
+                process.env.JWT_SECRET,
+                {expiresIn: '1h'},
+                (err,token) => {
+                    if(err){
+                        console.log(err);
+                        res.status(500).json(err)
+                    }else{
+                        res.status(200).json({token})
+                    }
+                }
+            )
+        }else{
+            res.status(401).json({measage:"Invalid credentials"})
+        }
+
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).json(err)
+        
+    });
+})
 
 module.exports = router;
 

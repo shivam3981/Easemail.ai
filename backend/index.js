@@ -2,7 +2,7 @@ require ('dotenv').config();
 
 //import express
 const express = require('express');
-const ProductRouter = require('./routers/ProductRouter');
+
 const UserRouter = require('./routers/UserRouter');
 const cors = require('cors');
 
@@ -17,7 +17,7 @@ app.use(cors(
         origin: '*',
     }
 ))
-app.use('/product',ProductRouter);
+
 app.use('/user',UserRouter);
 
 //endpoint or rotue 

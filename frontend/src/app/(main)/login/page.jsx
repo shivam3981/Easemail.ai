@@ -1,6 +1,49 @@
-import React from 'react'
+'use client';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import React from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
 
 const Login = () => {
+
+  //Define validation schema using Yup
+  const validationSchema = Yup.object({
+    email: Yup.string()
+      .email('Invalid email address')
+      .required('Email is required'),
+    password: Yup.string()
+      .min(6, 'Password must be at least 6 characters')
+      .required('Password is required'),
+  });
+
+  //Initialize Formik
+  const formik = useFormik({
+    initialValues:{
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit:(values) => {
+      console.log('Form submitted',values);
+      //Here you would typically handle authentication
+      // e.g., call an API to verify credentials
+
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}
+        /user/authenticate`, values) 
+        .then((result) => {
+          console.log(result.data);
+          localStorage.setItem("user",result.data.token);
+          token.success("Login Successfull")
+          
+        }).catch((err) => {
+          console.log(err);
+          toast.error("Login Failed. Please check your credentials.")
+          });
+        },
+  });
+
   return (
     <main className="relative py-20 bg-gray-900 bg-linear-to-b from-violet-900/10 via-transparent">
     <div>

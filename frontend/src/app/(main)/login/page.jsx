@@ -35,7 +35,7 @@ const Login = () => {
         .then((result) => {
           console.log(result.data);
           localStorage.setItem("user",result.data.token);
-          token.success("Login Successfull")
+          toast.success("Login Successfull")
           
         }).catch((err) => {
           console.log(err);
@@ -53,7 +53,7 @@ const Login = () => {
       <h1 className="block text-2xl font-bold text-gray-800">Sign in</h1>
       <p className="mt-2 text-sm text-gray-600">
         Don't have an account yet?
-        <a className="text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium" href="../examples/html/signup.html">
+        <a className="text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium" href="../main/signup/page.jsx">
           Sign up here
         </a>
       </p>
@@ -73,7 +73,7 @@ const Login = () => {
       <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">Or</div>
 
       {/* Form */}
-      <form>
+      <form onSubmit={formik.handleSubmit} >
         <div className="grid gap-y-4">
           {/* Form Group */}
           <div>

@@ -2,8 +2,11 @@
 import { useFormik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
-import { Trefoil } from 'ldrs/react';
-import 'ldrs/react/Trefoil.css'
+import { TailChase } from 'ldrs/react';
+import 'ldrs/react/TailChase.css'
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { Router } from 'next/router';
 
 
 const SignupSchema = Yup.object().shape({
@@ -29,17 +32,26 @@ const Signup = () => {
 
   const signupForm = useFormik({
     initialValues: {
+      name: '',
       email: '',
       password: '',
       ConfirmPassword: '',
     },
-    onSubmit: (values, { resetForm, setSubmitting }) => {
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
       console.log(values);
 
-      setTimeout(() => {
-        // resetForm();
+      try{
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/signup`, values,) 
+        console.log(res.status);
+        console.log(res.statusText);
+        toast.success("User registered successfully") 
+        resetForm();
+        Router.push('/login');
+      } catch (error) {
+        console.log(error);
         setSubmitting(false);
-      }, 3000);
+        toast.error("User registration failed");
+      }
 
 
       // send values to backend 
@@ -205,7 +217,7 @@ const Signup = () => {
                   className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                   {
                     signupForm.isSubmitting ? (
-                      <Trefoil
+                      <TailChase
                         size="40"
                         stroke="4"
                         strokeLength="0.15"

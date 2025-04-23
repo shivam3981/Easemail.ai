@@ -30,8 +30,7 @@ const Login = () => {
       //Here you would typically handle authentication
       // e.g., call an API to verify credentials
 
-      axios.post(`${process.env.NEXT_PUBLIC_API_URL}
-        /user/authenticate`, values)
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/authenticate`, values)
         .then((result) => {
           console.log(result.data);
           localStorage.setItem("user", result.data.token);

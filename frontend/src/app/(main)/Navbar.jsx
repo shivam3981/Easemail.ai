@@ -10,29 +10,29 @@ const Navbar = () => {
           <nav className="relative max-w-7xl w-full flex flex-wrap lg:grid lg:grid-cols-12 basis-full items-center px-4 md:px-6 lg:px-8 mx-auto">
             <div className="lg:col-span-3 flex items-center">
 
-            <Link href={"/"}>
-              <div className="font-bold  text-5xl cursor-pointer text-white"> EaseMail.ai</div>
-            </Link>
+              <Link href={"/"}>
+                <div className="font-bold  text-5xl cursor-pointer text-white"> EaseMail.ai</div>
+              </Link>
             </div>
             {/* Button Group */}
             <div className="flex items-center gap-x-1 lg:gap-x-2 ms-auto py-1 lg:ps-6 lg:order-3 lg:col-span-3">
               <Link href={"/login"}>
-              <button
-              
-                type="button"
-                className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl bg-white border border-gray-200 text-black hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
-              >
-                Login
-              </button>
+                <button
+
+                  type="button"
+                  className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl bg-white border border-gray-200 text-black hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" 
+                >
+                  Login
+                </button>
               </Link>
 
               <Link href={"/signup"}>
-              <button
-                type="button"
-                className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl border border-transparent bg-black text-white hover:bg-black focus:outline-hidden focus:bg-black transition disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
-              >
-                SignUp
-              </button>
+                <button
+                  type="button"
+                  className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl border border-transparent bg-black text-white hover:bg-black  focus:outline-hidden focus:bg-black transition disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+                >
+                  SignUp
+                </button>
               </Link>
 
               <div className="lg:hidden">
@@ -87,23 +87,7 @@ const Navbar = () => {
               aria-labelledby="hs-navbar-hcail-collapse"
             >
               <div className="flex flex-col gap-y-4 gap-x-0 mt-5 lg:flex-row lg:justify-center lg:items-center lg:gap-y-0 lg:gap-x-7 lg:mt-0">
-                <div>
-                  {/* <Link
-                    className="relative inline-block text-black focus:outline-hidden before:absolute before:bottom-0.5 before:start-0 before:-z-1 before:w-full before:h-1 before:bg"
-                    href="/"
-                    aria-current="page"
-                  >
-                    Home
-                  </Link> */}
-                </div>
-                <div>
-                  {/* <Link
-                    className="inline-block text-white hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
-                    href="#features"
-                  >
-                    Features 
-                  </Link> */}
-                </div>
+                
                 <div>
                   <Link
                     className="inline-block text-white hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
@@ -120,15 +104,7 @@ const Navbar = () => {
                     Contact
                   </Link>
                 </div>
-                <div>
-                  {/* <Link
-                    className="inline-block text-white hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
-                    href="#Pricing"
-                    
-                  >
-                    Pricing
-                  </Link> */}
-                </div>
+                
               </div>
             </div>
             {/* End Collapse */}

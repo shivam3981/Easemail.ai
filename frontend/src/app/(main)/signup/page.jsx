@@ -41,7 +41,7 @@ const Signup = () => {
       console.log(values);
 
       try{
-        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/signup`, values,) 
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/add`, values) 
         console.log(res.status);
         console.log(res.statusText);
         toast.success("User registered successfully") 
@@ -69,7 +69,7 @@ const Signup = () => {
             <h1 className="block text-2xl font-bold text-gray-800">Sign up</h1>
             <p className="mt-2 text-sm text-gray-600">
               Already have an account?
-              <a className="text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium" href="../examples/html/signin.html">
+              <a className="text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium" href="/login">
                 Sign in here
               </a>
             </p>
@@ -219,7 +219,7 @@ const Signup = () => {
                     signupForm.isSubmitting ? (
                       <TailChase
                         size="40"
-                        stroke="4"
+                        // stroke="4"
                         strokeLength="0.15"
                         bgOpacity="0.1"
                         speed="1.4"

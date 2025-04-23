@@ -3,7 +3,7 @@ import Navbar from './(main)/Navbar';
 import Footer from './(main)/footer/page';
 import Pricing from './(main)/Pricing/page';
 import Features from './(main)/Features/page';
-// import ScrollVelocity from './(main)/ScrollVelocity/page';
+
 
 const Home = () => {
   return (
@@ -11,14 +11,16 @@ const Home = () => {
       <Navbar />
 
       <div className='bg-gray-900'>
-      {/* <ScrollVelocity/> */}
+        {/* <ScrollVelocity/> */}
+
+
         {/* Hero */}
         <div className="bg-linear-to-b from-violet-900/10 via-transparent">
           <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-24 space-y-8">
             {/* Announcement Banner */}
             <div className="flex justify-center">
             </div>
-            
+
             {/* End Announcement Banner */}
             {/* Title */}
             <div className="max-w-3xl text-center mx-auto">
@@ -54,15 +56,17 @@ const Home = () => {
                   <path d="m9 18 6-6-6-6" />
                 </svg>
               </a>
+
+              
             </div>
             {/* End Buttons */}
-          </div> 
+          </div>
         </div>
         <Features />
 
         {/* End Hero */}
-        
-      </div> 
+
+      </div>
 
 
       <Pricing />

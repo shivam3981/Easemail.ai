@@ -16,6 +16,7 @@ import EmailPreview from "@/components/email-preview"
 import { templates, colorThemes } from "@/lib/email-data"
 import { toast } from "react-hot-toast"
 import { CldUploadWidget } from 'next-cloudinary';
+import axios from "axios"; // Import Axios for API calls
 
 // Initialize the Gemini API with your API key
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY)
@@ -46,6 +47,7 @@ export default function EmailGenerator() {
   const [copied, setCopied] = useState(false)
   const [activeTab, setActiveTab] = useState("design")
   const [logoPreview, setLogoPreview] = useState(null)
+  const [recipients, setRecipients] = useState(""); // New state for recipients
 
   // Set generated email when form data changes to ensure preview updates
   useEffect(() => {
@@ -270,6 +272,30 @@ export default function EmailGenerator() {
 
     toast.success("HTML file downloaded successfully.")
   }
+
+  // Function to send the email
+  const sendEmail = async () => {
+    if (!generatedEmail || !recipients) {
+      toast.error("Please generate an email and provide recipients.");
+      return;
+    }
+
+    try {
+      const emailData = {
+        recipients: recipients.split(",").map((email) => email.trim()), // Split and trim recipient emails
+        subject: formData.headerText || "Your Email Subject",
+        body: generateRichTextForEmailClients(generatedEmail, selectedTheme), // Use the generated rich text
+      };
+
+      // Send the email data to the backend API
+      await axios.post("/api/send-email", emailData);
+
+      toast.success("Email sent successfully!");
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Failed to send email. Please try again.");
+    }
+  };
 
   // Creates a simplified rich text version that can be pasted into email clients
   const generateRichTextForEmailClients = (data, themeIndex) => {
@@ -677,6 +703,18 @@ export default function EmailGenerator() {
                     </div>
                   </div>
 
+                  <div>
+                    <Label htmlFor="recipients">Recipients</Label>
+                    <Textarea
+                      id="recipients"
+                      value={recipients}
+                      onChange={(e) => setRecipients(e.target.value)}
+                      placeholder="Enter recipient email addresses, separated by commas"
+                      rows={2}
+                      className="mt-1.5 resize-none"
+                    />
+                  </div>
+
                   <div className="flex flex-col sm:flex-row gap-4 pt-4">
                     <Button onClick={generateEmail} className="flex-1" disabled={loading}>
                       {loading ? (
@@ -695,6 +733,11 @@ export default function EmailGenerator() {
                     <Button onClick={handleReset} variant="outline" className="flex items-center gap-2">
                       <RefreshCw className="h-4 w-4" />
                       Reset
+                    </Button>
+
+                    <Button onClick={sendEmail} className="flex items-center gap-2">
+                      <Mail className="h-4 w-4" />
+                      Send Email
                     </Button>
                   </div>
                 </div>

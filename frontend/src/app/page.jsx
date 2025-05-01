@@ -36,11 +36,13 @@ const Home = () => {
             </div>
             {/* Buttons */}
             <div className="text-center">
+              
               <a
                 className="inline-flex justify-center items-center gap-x-3 text-center bg-linear-to-tl from-blue-600 to-violet-600 shadow-lg shadow-transparent hover:shadow-blue-700/50 border border-transparent text-white text-sm font-medium rounded-full focus:outline-hidden focus:shadow-blue-700/50 py-3 px-6 cursor-pointer"
-                href="/"
+                href="./user/compose"
               >
                 Get started
+                
                 <svg
                   className="shrink-0 size-4"
                   xmlns="http://www.w3.org/2000/svg"

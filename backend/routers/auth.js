@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-// require('./passport.js')(passport)
+require('../config/passport')(passport) // Uncomment and update the path if needed
 const authController = require('../controllers/authController');
 const { authenticate } = require('../middlewares/auth');
 

@@ -1,13 +1,12 @@
 'use client';
 import { useFormik } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Yup from 'yup';
 import { TailChase } from 'ldrs/react';
 import 'ldrs/react/TailChase.css'
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Router } from 'next/router';
-
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -52,16 +51,26 @@ const Signup = () => {
         setSubmitting(false);
         toast.error("User registration failed");
       }
-
-
-      // send values to backend 
-
     },
     validationSchema: SignupSchema,
+  });
 
-  })
+  const handleGoogleSignup = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/google`;
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    
+    if (token) {
+      localStorage.setItem('user', token);
+      toast.success('Signup Successful');
+      window.location.href = '/dashboard';
+    }
+  }, []);
+
   return (
-
     <div className='bg-gray-900 bg-linear-to-b from-violet-900/10 via-transparent relative py-20'>
       <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-2xs max-w-lg mx-auto  ">
         <div className="p-4 sm:p-7 ">
@@ -76,7 +85,11 @@ const Signup = () => {
           </div>
 
           <div className="mt-5">
-            <button type="button" className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+            <button 
+              onClick={handleGoogleSignup} 
+              type="button" 
+              className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+            >
               <svg className="w-4 h-auto" width="46" height="47" viewBox="0 0 46 47" fill="none">
                 <path d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z" fill="#4285F4" />
                 <path d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z" fill="#34A853" />

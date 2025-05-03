@@ -467,7 +467,7 @@ export default function EmailGenerator() {
       <div className="flex flex-col items-center mb-8 text-center">
         <div className="flex items-center gap-2 mb-2">
           <Sparkles className="h-6 w-6 text-sky-500" />
-          <h1 className="text-3xl font-bold text-slate-800">DraftPal</h1>
+          <h1 className="text-3xl font-bold text-slate-800">AI Email Generator</h1>
         </div>
         <p className="text-slate-600 max-w-2xl">
           Create beautiful, responsive emails in minutes with AI-powered content generation

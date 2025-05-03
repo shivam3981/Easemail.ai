@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-// require('./passport.js')(passport)
+const jwt = require('jsonwebtoken');
 const authController = require('../controllers/authController');
 const { authenticate } = require('../middlewares/auth');
 
 // Google OAuth routes
 router.get('/google', passport.authenticate('google', { 
   session: false,
-  // Explicitly request Gmail sending scopes
   scope: [
     'profile', 
     'email', 
@@ -25,7 +24,17 @@ router.get(
     session: false, 
     failureRedirect: '/login' 
   }),
-  authController.googleCallback
+  (req, res) => {
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: req.user._id, email: req.user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
+    // Redirect to frontend with token
+    res.redirect(`${process.env.FRONTEND_URL}/signup?token=${token}`);
+  }
 );
 
 // Get current user

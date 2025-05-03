@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 // import Header from '@/components/Header';
 import EmailGenerator from '@/components/email-generator';
 import axios from 'axios';
+import EmailGeneratorSimple from '@/components/email-generator-simple';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'; // Import Tabs components
 
 export default function ComposePage() {
   // const { user, loading } = useAuth();
@@ -17,6 +19,11 @@ export default function ComposePage() {
   });
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isSending, setIsSending] = useState(false);
+  const [isSimpleMode, setIsSimpleMode] = useState(true); // State to toggle between modes
+
+  const handleTabChange = (value) => {
+    setIsSimpleMode(value === 'simple');
+  };
 
   // useEffect(() => {
   //   if (!loading && !user) {
@@ -31,7 +38,7 @@ export default function ComposePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Simple validation
     if (!formData.to || !formData.subject || !formData.body) {
       setStatus({
@@ -40,23 +47,23 @@ export default function ComposePage() {
       });
       return;
     }
-    
+
     setIsSending(true);
     setStatus({ type: '', message: '' });
-    
+
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/email/send`,
         formData,
         { withCredentials: true }
       );
-      
+
       if (response.data.success) {
         setStatus({
           type: 'success',
           message: 'Email sent successfully!'
         });
-        
+
         // Reset form
         setFormData({
           to: '',
@@ -88,22 +95,37 @@ export default function ComposePage() {
       <main className="p-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Email Generator Section */}
-          <div className="bg-white rounded-lg shadow">
-            <EmailGenerator />
+          <div className="bg-white rounded-lg shadow p-6">
+            <Tabs
+              value={isSimpleMode ? 'simple' : 'advanced'}
+              onValueChange={handleTabChange}
+              className="w-full"
+            >
+              <TabsList className="mb-4">
+                <TabsTrigger value="simple">Simple Email Generator</TabsTrigger>
+                <TabsTrigger value="advanced">Advanced Email Generator</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="simple">
+                <EmailGeneratorSimple />
+              </TabsContent>
+              <TabsContent value="advanced">
+                <EmailGenerator />
+              </TabsContent>
+            </Tabs>
           </div>
 
           {/* Compose Email Section */}
           <div className="bg-white rounded-lg shadow p-6">
             <h1 className="text-2xl font-bold mb-6">Compose Email</h1>
-            
+
             {status.message && (
-              <div className={`p-4 mb-6 rounded ${
-                status.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-              }`}>
+              <div className={`p-4 mb-6 rounded ${status.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                }`}>
                 {status.message}
               </div>
             )}
-            
+
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label htmlFor="to" className="block text-gray-700 font-medium mb-2">
@@ -119,7 +141,7 @@ export default function ComposePage() {
                   placeholder="recipient@example.com"
                 />
               </div>
-              
+
               <div className="mb-4">
                 <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">
                   Subject:
@@ -134,7 +156,7 @@ export default function ComposePage() {
                   placeholder="Email subject"
                 />
               </div>
-              
+
               <div className="mb-6">
                 <label htmlFor="body" className="block text-gray-700 font-medium mb-2">
                   Message:
@@ -149,14 +171,13 @@ export default function ComposePage() {
                   placeholder="Your email content will appear here..."
                 ></textarea>
               </div>
-              
+
               <div className="flex justify-end">
                 <button
                   type="submit"
                   disabled={isSending}
-                  className={`px-6 py-2 rounded-md text-white font-medium ${
-                    isSending ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'
-                  } transition`}
+                  className={`px-6 py-2 rounded-md text-white font-medium ${isSending ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'
+                    } transition`}
                 >
                   {isSending ? 'Sending...' : 'Send Email'}
                 </button>

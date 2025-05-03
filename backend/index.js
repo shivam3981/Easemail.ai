@@ -2,6 +2,8 @@ require ('dotenv').config();
 
 //import express
 const express = require('express');
+const passport = require('passport');
+const session = require('express-session');
 
 const UserRouter = require('./routers/UserRouter');
 const authRoutes = require('./routers/auth');
@@ -18,7 +20,21 @@ app.use(cors(
     {
         origin: '*',
     }
-))
+));
+
+// Initialize session middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Import Passport config
+require('./config/passport');
 
 app.use('/user',UserRouter);
 app.use('/api/auth', authRoutes);

@@ -4,6 +4,8 @@ require ('dotenv').config();
 const express = require('express');
 
 const UserRouter = require('./routers/UserRouter');
+const authRoutes = require('./routers/auth');
+const emailRoutes = require('./routers/email');
 const cors = require('cors');
 
 // initialize express
@@ -19,6 +21,8 @@ app.use(cors(
 ))
 
 app.use('/user',UserRouter);
+app.use('/api/auth', authRoutes);
+app.use('/api/email', emailRoutes);
 
 //endpoint or rotue 
 app.get('/', (req,res)=> {res.send('response from express') });

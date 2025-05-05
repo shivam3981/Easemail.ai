@@ -90,20 +90,20 @@ export default function ComposePage() {
   // }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       {/* <Header /> */}
       <main className="p-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Email Generator Section */}
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-slate-900 rounded-lg shadow p-6 border border-slate-800">
             <Tabs
               value={isSimpleMode ? 'simple' : 'advanced'}
               onValueChange={handleTabChange}
               className="w-full"
             >
-              <TabsList className="mb-4">
-                <TabsTrigger value="simple">Simple Email Generator</TabsTrigger>
-                <TabsTrigger value="advanced">Advanced Email Generator</TabsTrigger>
+              <TabsList className="mb-4 bg-slate-800 border border-slate-700 rounded-lg">
+                <TabsTrigger value="simple" className="data-[state=active]:bg-sky-700 data-[state=active]:text-white text-slate-300">Simple Email Generator</TabsTrigger>
+                <TabsTrigger value="advanced" className="data-[state=active]:bg-sky-700 data-[state=active]:text-white text-slate-300">Advanced Email Generator</TabsTrigger>
               </TabsList>
 
               <TabsContent value="simple">
@@ -116,11 +116,13 @@ export default function ComposePage() {
           </div>
 
           {/* Compose Email Section */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h1 className="text-2xl font-bold mb-6">Compose Email</h1>
+          <div className="bg-slate-900 rounded-lg shadow p-6 border border-slate-800">
+            <h1 className="text-2xl font-bold mb-6 text-slate-100">Compose Email</h1>
 
             {status.message && (
-              <div className={`p-4 mb-6 rounded ${status.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+              <div className={`p-4 mb-6 rounded ${status.type === 'success'
+                ? 'bg-green-900 text-green-300 border border-green-700'
+                : 'bg-red-900 text-red-300 border border-red-700'
                 }`}>
                 {status.message}
               </div>
@@ -128,7 +130,7 @@ export default function ComposePage() {
 
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label htmlFor="to" className="block text-gray-700 font-medium mb-2">
+                <label htmlFor="to" className="block text-slate-200 font-medium mb-2">
                   To:
                 </label>
                 <input
@@ -137,13 +139,13 @@ export default function ComposePage() {
                   name="to"
                   value={formData.to}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 border border-slate-700 rounded-md bg-slate-800 text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
                   placeholder="recipient@example.com"
                 />
               </div>
 
               <div className="mb-4">
-                <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">
+                <label htmlFor="subject" className="block text-slate-200 font-medium mb-2">
                   Subject:
                 </label>
                 <input
@@ -152,13 +154,13 @@ export default function ComposePage() {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 border border-slate-700 rounded-md bg-slate-800 text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
                   placeholder="Email subject"
                 />
               </div>
 
               <div className="mb-6">
-                <label htmlFor="body" className="block text-gray-700 font-medium mb-2">
+                <label htmlFor="body" className="block text-slate-200 font-medium mb-2">
                   Message:
                 </label>
                 <textarea
@@ -167,7 +169,7 @@ export default function ComposePage() {
                   value={formData.body}
                   onChange={handleChange}
                   rows="10"
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
+                  className="w-full px-4 py-2 border border-slate-700 rounded-md bg-slate-800 text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono text-sm"
                   placeholder="Your email content will appear here..."
                 ></textarea>
               </div>
@@ -175,9 +177,19 @@ export default function ComposePage() {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  disabled={isSending}
-                  className={`px-6 py-2 rounded-md text-white font-medium ${isSending ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'
-                    } transition`}
+                  disabled={
+                    isSending ||
+                    !formData.to.trim() ||
+                    !formData.subject.trim() ||
+                    !formData.body.trim()
+                  }
+                  className={`px-6 py-2 rounded-md text-white font-medium ${
+                    isSending
+                      ? 'bg-sky-400'
+                      : (!formData.to.trim() || !formData.subject.trim() || !formData.body.trim())
+                      ? 'bg-slate-700 cursor-not-allowed'
+                      : 'bg-sky-600 hover:bg-sky-700'
+                  } transition`}
                 >
                   {isSending ? 'Sending...' : 'Send Email'}
                 </button>

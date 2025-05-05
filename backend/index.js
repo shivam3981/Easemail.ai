@@ -1,4 +1,4 @@
-require ('dotenv').config();
+require('dotenv').config();
 
 //import express
 const express = require('express');
@@ -24,9 +24,9 @@ app.use(cors(
 
 // Initialize session middleware
 app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
 }));
 
 // Initialize Passport
@@ -36,17 +36,17 @@ app.use(passport.session());
 // Import Passport config
 require('./config/passport');
 
-app.use('/user',UserRouter);
+app.use('/user', UserRouter);
 app.use('/api/auth', authRoutes);
 app.use('/api/email', emailRoutes);
 
 //endpoint or rotue 
-app.get('/', (req,res)=> {res.send('response from express') });
+app.get('/', (req, res) => { res.send('response from express') });
 
 // add
-app.get('/add', (req, res) => {res.send('response from add') });
+app.get('/add', (req, res) => { res.send('response from add') });
 
-app.listen( port,() => {
+app.listen(port, () => {
     console.log('server started');
 })
 

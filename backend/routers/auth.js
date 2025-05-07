@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+require('../config/passport'); // Just require the file, don't call it
 const jwt = require('jsonwebtoken');
 const authController = require('../controllers/authController');
 const { authenticate } = require('../middlewares/auth');

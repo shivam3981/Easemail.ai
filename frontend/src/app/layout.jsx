@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import PrelineScript from "@/components/PrelineScript";
 import { AuthProvider } from "@/context/AuthContext";
+import { AppProvider } from "@/context/AppContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +26,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <AppProvider>
           <PrelineScript />
           <Toaster />
           {children}
+        </AppProvider>
       </body>
     </html>
   );

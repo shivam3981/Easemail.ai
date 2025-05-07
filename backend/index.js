@@ -16,17 +16,19 @@ const port = process.env.PORT || 5000;
 
 //middlewares
 app.use(express.json());
-app.use(cors(
-    {
-        origin: '*',
-    }
-));
+app.use(cors({
+    origin: ['http://localhost:3000'],
+    credentials: true // Add this line to allow credentials
+}));
 
 // Initialize session middleware
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || 'your-secure-fallback-secret-key',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
 }));
 
 // Initialize Passport

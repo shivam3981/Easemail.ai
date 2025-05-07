@@ -107,7 +107,11 @@ export default function ComposePage() {
               </TabsList>
 
               <TabsContent value="simple">
-                <EmailGeneratorSimple />
+                <EmailGeneratorSimple
+                  onAddToMessage={html =>
+                    setFormData(prev => ({ ...prev, body: html }))
+                  }
+                />
               </TabsContent>
               <TabsContent value="advanced">
                 <EmailGenerator />

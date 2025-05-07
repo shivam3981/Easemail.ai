@@ -12,7 +12,54 @@ import axios from "axios";
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-const EmailGeneratorSimple = () => {
+function formatHtmlCode(emailHtml) {
+    // Reference: Use a proper HTML template as in email-generator.jsx
+    return `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generated Email</title>
+<style>
+    body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    .container { max-width: 600px; margin: 0 auto; }
+    .email-content { 
+    padding: 30px; 
+    background-color: #1e293b;
+    color: #e0e6ed;
+    border-radius: 8px;
+    }
+    .header { font-size: 24px; font-weight: bold; color: #38bdf8; }
+    .subheader { font-size: 18px; color: #7dd3fc; margin-top: 10px; }
+    .content { margin-top: 20px; color: #e0e6ed; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="email-content">
+${emailHtml
+            .replace(/^\s+|\s+$/g, "")
+            .replace(/<div[^>]*>|<\/div>/g, "") // Remove outer div if present
+            .replace(/<h1[^>]*>/g, '<h1 class="header">')
+            .replace(/<p[^>]*>/g, '<div class="content">')
+            .replace(/<\/p>/g, '</div>')
+        }
+    </div>
+</div>
+</body>
+</html>`;
+}
+
+// Helper to extract plain text from generated HTML
+function extractPlainText(html) {
+    if (!html) return "";
+    // Remove all HTML tags except <br>
+    let text = html.replace(/<br\s*\/?>/gi, '\n');
+    text = text.replace(/<\/?[^>]+(>|$)/g, "");
+    return text.trim();
+}
+
+const EmailGeneratorSimple = ({ onAddToMessage }) => {
     const [prompt, setPrompt] = useState("");
     const [generatedEmail, setGeneratedEmail] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -149,6 +196,18 @@ const EmailGeneratorSimple = () => {
                                             <Save className="h-4 w-4" />
                                             Save
                                         </Button>
+                                        {/* Add to Message Button */}
+                                        {onAddToMessage && (
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                // Use plain text instead of HTML
+                                                onClick={() => onAddToMessage(extractPlainText(generatedEmail))}
+                                                className="flex items-center gap-2 border-green-500 text-green-400 hover:bg-green-900 hover:text-white"
+                                            >
+                                                Add to Message
+                                            </Button>
+                                        )}
                                     </div>
                                 </div>
                                 <div
@@ -161,12 +220,12 @@ const EmailGeneratorSimple = () => {
                     )}
                 </TabsContent>
 
-                <TabsContent value="code">
+                <TabsContent value="code" className="mt-0 col-span-full">
                     {generatedEmail && (
-                        <Card className="bg-slate-900 border-slate-700 shadow-xl">
-                            <CardContent className="p-8">
-                                <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-lg font-semibold text-slate-100">HTML Code</h3>
+                        <Card className="bg-slate-900 border-slate-700 shadow-2xl w-full h-full">
+                            <CardContent className="p-3 sm:p-8">
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
+                                    <h3 className="text-base sm:text-lg font-semibold text-slate-100">HTML Code</h3>
                                     <Button
                                         variant="outline"
                                         size="sm"
@@ -186,9 +245,11 @@ const EmailGeneratorSimple = () => {
                                         )}
                                     </Button>
                                 </div>
-                                <pre className="bg-slate-950 text-sky-200 p-6 rounded-lg overflow-auto max-h-[500px] text-sm border border-slate-800 shadow-inner">
-                                    {generatedEmail}
-                                </pre>
+                                <div className="relative">
+                                    <pre className="bg-slate-950 text-sky-200 p-3 sm:p-6 rounded-lg overflow-auto max-h-[400px] sm:max-h-[500px] text-xs sm:text-sm border border-slate-800 shadow-inner whitespace-pre-wrap break-words">
+                                        {formatHtmlCode(generatedEmail)}
+                                    </pre>
+                                </div>
                             </CardContent>
                         </Card>
                     )}

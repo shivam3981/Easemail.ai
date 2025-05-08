@@ -4,22 +4,40 @@ require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const UserRouter = require('./routers/UserRouter');
-const authRoutes = require('./routers/auth');
-const emailRoutes = require('./routers/email');
-const cors = require('cors');
+const authRoutes = require('./routes/auth');
+const emailRoutes = require('./routes/email');
 
 // initialize express
 const app = express();
 const port = process.env.PORT || 5000;
 
 //middlewares
-app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:3000'],
-    credentials: true // Add this line to allow credentials
+  origin: function(origin, callback) {
+    const allowedOrigins = [
+      
+      process.env.CLIENT_URL,
+      'http://localhost:3000'
+    ];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+  exposedHeaders: ['Set-Cookie']
 }));
+
+app.use(cookieParser());
+app.use(express.json());
 
 // Initialize session middleware
 app.use(session({
@@ -38,17 +56,34 @@ app.use(passport.session());
 // Import Passport config
 require('./config/passport');
 
+// Enable trust proxy since we're behind a proxy on Render
+app.set('trust proxy', 1);
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
 app.use('/user', UserRouter);
 app.use('/api/auth', authRoutes);
 app.use('/api/email', emailRoutes);
 
-//endpoint or rotue 
-app.get('/', (req, res) => { res.send('response from express') });
+// Health check endpoint
+app.get('/', (req, res) => { 
+  res.json({ status: 'ok', message: 'Server is running' }); 
+});
 
-// add
-app.get('/add', (req, res) => { res.send('response from add') });
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ 
+    success: false, 
+    message: 'Server error', 
+    error: err.message 
+  });
+});
 
 app.listen(port, () => {
-    console.log('server started');
-})
+  console.log(`Server running on port ${port}`);
+});
 

@@ -1,7 +1,25 @@
+'use client';
+
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import React from 'react';
+import Image from 'next/image';
+import { useState } from 'react';
 
 const Navbar = () => {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
   return (
     <div className=" bg-gray-900 bg-linear-to-b from-violet-900/10 via-transparent">
       <>
@@ -9,32 +27,80 @@ const Navbar = () => {
         <header className="flex flex-wrap lg:justify-start lg:flex-nowrap z-50 w-full py-7 ">
           <nav className="relative max-w-7xl w-full flex flex-wrap lg:grid lg:grid-cols-12 basis-full items-center px-4 md:px-6 lg:px-8 mx-auto">
             <div className="lg:col-span-3 flex items-center">
-
-              <Link href={"/"}>
-                <div className="font-bold  text-5xl cursor-pointer text-white"> EaseMail.ai</div>
+              <Link href="/" className="flex-shrink-0 flex items-center">
+                <span className="text-2xl font-bold text-blue-600">Easemail.ai</span>
               </Link>
             </div>
             {/* Button Group */}
             <div className="flex items-center gap-x-1 lg:gap-x-2 ms-auto py-1 lg:ps-6 lg:order-3 lg:col-span-3">
-              <Link href={"/login"}>
-                <button
-
-                  type="button"
-                  className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl bg-white border border-gray-200 text-black hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" 
-                >
-                  Login
-                </button>
-              </Link>
-
-              <Link href={"/signup"}>
-                <button
-                  type="button"
-                  className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl border border-transparent bg-black text-white hover:bg-black  focus:outline-hidden focus:bg-black transition disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
-                >
-                  SignUp
-                </button>
-              </Link>
-
+              {user ? (
+                <>
+                  <Link 
+                    href="/dashboard" 
+                    className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Dashboard
+                  </Link>
+                  <div className="relative group">
+                    <button 
+                      className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 focus:outline-none"
+                      onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    >
+                      {user.photo ? (
+                        <Image
+                          src={user.photo}
+                          alt={user.displayName}
+                          width={32}
+                          height={32}
+                          className="rounded-full"
+                        />
+                      ) : (
+                        <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white">
+                          {user.displayName?.charAt(0)}
+                        </div>
+                      )}
+                      <span className="text-sm font-medium">{user.displayName}</span>
+                    </button>
+                    
+                    {/* Dropdown Menu */}
+                    {isMenuOpen && (
+                      <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                        <Link
+                          href="/profile"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          Profile
+                        </Link>
+                        <button
+                          onClick={() => {
+                            handleLogout();
+                            setIsMenuOpen(false);
+                          }}
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          Sign out
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Sign in
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium"
+                  >
+                    Sign up
+                  </Link>
+                </>
+              )}
               <div className="lg:hidden">
                 <button
                   type="button"
@@ -87,7 +153,6 @@ const Navbar = () => {
               aria-labelledby="hs-navbar-hcail-collapse"
             >
               <div className="flex flex-col gap-y-4 gap-x-0 mt-5 lg:flex-row lg:justify-center lg:items-center lg:gap-y-0 lg:gap-x-7 lg:mt-0">
-                
                 <div>
                   <Link
                     className="inline-block text-white hover:text-gray-600 focus:outline-hidden focus:text-gray-600"
@@ -104,7 +169,6 @@ const Navbar = () => {
                     Contact
                   </Link>
                 </div>
-                
               </div>
             </div>
             {/* End Collapse */}

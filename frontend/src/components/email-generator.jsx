@@ -581,7 +581,7 @@ ${formData.emailType === "holiday" ? "- Capture the seasonal spirit." : ""}
                     <Card className="bg-slate-800 border-slate-700 shadow-inner w-full flex flex-col justify-center h-full min-h-[80px]">
                       <CardContent className="p-4">
                         <div>
-                          <span className="font-semibold text-sky-400 text-lg">
+                          <span className="font-semibold text-sky-400 text-lg ">
                             {templates[formData.emailType]?.name}
                           </span>
                           <span className="block text-xs text-slate-400 mt-2">

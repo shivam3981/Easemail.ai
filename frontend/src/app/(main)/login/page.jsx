@@ -4,9 +4,10 @@ import * as Yup from 'yup';
 import React from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
+  const router = useRouter();
 
   //Define validation schema using Yup
   const validationSchema = Yup.object({
@@ -38,11 +39,11 @@ const Login = () => {
         .then((result) => {
           console.log(result.data);
           localStorage.setItem("user", result.data.token);
-          toast.success("Login Successfull")
-
+          toast.success("Login Successfull");
+          router.push('/user/compose');
         }).catch((err) => {
           console.log(err);
-          toast.error("Login Failed. Please check your credentials.")
+          toast.error("Login Failed. Please check your credentials.");
         });
     },
   });
@@ -153,4 +154,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

@@ -52,7 +52,7 @@ export default function ComposePage() {
     setStatus({ type: '', message: '' });
 
     try {
-      const token = localStorage.getItem("user");
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/email/send`,
         formData,

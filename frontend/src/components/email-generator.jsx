@@ -316,14 +316,19 @@ ${formData.emailType === "holiday" ? "- Capture the seasonal spirit." : ""}
     }
 
     try {
+      const token = localStorage.getItem("token");
       const emailData = {
-        recipients: recipients.split(",").map((email) => email.trim()), // Split and trim recipient emails
-        subject: formData.headerText || "Your Email Subject",
+        to: recipients.split(",").map((email) => email.trim()), // Split and trim recipient emails
+        subject: generatedEmail.subject || generatedEmail.headerText || "Your Email Subject",
         body: generateRichTextForEmailClients(generatedEmail, selectedTheme), // Use the generated rich text
       };
 
       // Send the email data to the backend API
-      await axios.post("/api/send-email", emailData);
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/email/send`, emailData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       toast.success("Email sent successfully!");
     } catch (error) {

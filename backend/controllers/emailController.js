@@ -75,11 +75,21 @@ exports.sendEmail = async (req, res) => {
       });
     }
     
+    console.log(req.user.googleTokens, req.user.googleTokens.refresh_token);
+    
     // Check if user has refresh token before attempting to send
-    if (!req.user.googleTokens || !req.user.googleTokens.refresh_token) {
+    // if (!req.user.googleTokens || !req.user.googleTokens.refresh_token) {
+    //   return res.status(401).json({
+    //     success: false,
+    //     message: 'No refresh token available. Please log out and log back in to re-authenticate with Google.'
+    //   });
+    // }
+
+    // Check if user has access token before attempting to send
+    if (!req.user.googleTokens || !req.user.googleTokens.access_token) {
       return res.status(401).json({
         success: false,
-        message: 'No refresh token available. Please log out and log back in to re-authenticate with Google.'
+        message: 'No access token available. Please log out and log back in to re-authenticate with Google.'
       });
     }
     
@@ -96,8 +106,8 @@ exports.sendEmail = async (req, res) => {
         user: req.user.email,
         clientId: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        refreshToken: req.user.googleTokens.refresh_token,
-        accessToken: oauth2Client.credentials.access_token
+        accessToken: oauth2Client.credentials.access_token // Use access token only
+        // refreshToken: req.user.googleTokens.refresh_token, // Optional, only if available
       },
       debug: true // Enable debugging
     });

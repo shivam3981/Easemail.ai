@@ -26,7 +26,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
 const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
-export default function EmailGenerator() {
+export default function EmailGenerator({ onAddToMessage }) {
   const [formData, setFormData] = useState({
     emailType: "business",
     companyName: "",
@@ -550,7 +550,7 @@ ${formData.emailType === "holiday" ? "- Capture the seasonal spirit." : ""}
           <Card className="bg-slate-900 border-sky-700 shadow-2xl w-full h-full">
             <CardContent className="p-4 sm:p-12 h-full flex flex-col">
               <div className="space-y-8 flex-1 flex flex-col">
-                <div className="flex flex-col xl:flex-row xl:items-stretch gap-6 xl:gap-10 w-full">
+                <div className="flex flex-col gap-6 xl:gap-10 w-full">
                   {/* Template Type Selector */}
                   <div className="flex-1 min-w-[260px] max-w-xl">
                     <Label htmlFor="emailType" className="text-base font-semibold text-slate-200 mb-2 block">
@@ -860,6 +860,17 @@ ${formData.emailType === "holiday" ? "- Capture the seasonal spirit." : ""}
                       <Mail className="h-4 w-4" />
                       Copy for Email Client
                     </Button>
+                    {/* Add to Message Button */}
+                    {typeof onAddToMessage === "function" && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onAddToMessage(generateHtmlCode(generatedEmail, selectedTheme))}
+                        className="flex items-center gap-2 border-green-500 text-green-400 hover:bg-green-900 hover:text-white"
+                      >
+                        Add to Message
+                      </Button>
+                    )}
                   </div>
                 </div>
                 <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-3 sm:p-6 overflow-x-auto">

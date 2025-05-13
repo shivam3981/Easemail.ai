@@ -28,7 +28,7 @@ const Navbar = () => {
           <nav className="relative max-w-7xl w-full flex flex-wrap lg:grid lg:grid-cols-12 basis-full items-center px-4 md:px-6 lg:px-8 mx-auto">
             <div className="lg:col-span-3 flex items-center">
               <Link href="/" className="flex-shrink-0 flex items-center">
-                <span className="text-2xl font-bold text-blue-600">Easemail.ai</span>
+                <span className="text-5xl font-bold cursor-pointer text-white">EaseMail.ai</span>
               </Link>
             </div>
             {/* Button Group */}
@@ -89,7 +89,7 @@ const Navbar = () => {
                 <>
                   <Link
                     href="/login"
-                    className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+                    className="text-white hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Sign in
                   </Link>

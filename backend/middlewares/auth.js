@@ -3,7 +3,7 @@ const User = require('../models/User');
 
 exports.authenticate = async (req, res, next) => {
   try {
-    // Enhanced logging for request details
+    // Enhanced logging for request details 
     console.log('Auth middleware - Request details:', {
       method: req.method,
       path: req.path,

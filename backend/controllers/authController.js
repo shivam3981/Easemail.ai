@@ -48,6 +48,8 @@ exports.getCurrentUser = async (req, res) => {
     
     // Generate a fresh token to return to the frontend
     const token = generateToken(user._id);
+    console.log(req.user);
+    console.log(user);
     
     res.status(200).json({
       success: true,

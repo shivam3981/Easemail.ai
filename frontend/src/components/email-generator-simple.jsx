@@ -202,7 +202,7 @@ const EmailGeneratorSimple = ({ onAddToMessage }) => {
                                                 variant="outline"
                                                 size="sm"
                                                 // Use plain text instead of HTML
-                                                onClick={() => onAddToMessage(extractPlainText(generatedEmail))}
+                                                onClick={() => onAddToMessage((generatedEmail))}
                                                 className="flex items-center gap-2 border-green-500 text-green-400 hover:bg-green-900 hover:text-white"
                                             >
                                                 Add to Message

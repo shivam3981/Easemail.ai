@@ -1,8 +1,22 @@
+'use client';
 import React from 'react'
 // Reference: npm install @mui/material @emotion/react @emotion/styled chart.js react-chartjs-2
 
 import { Box, Typography, Paper, Grid } from '@mui/material'
 import { Bar } from 'react-chartjs-2'
+
+// Register Chart.js components
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js'
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const data = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],

@@ -74,7 +74,7 @@ const Contact = () => {
           peer-not-placeholder-shown:text-xs
           peer-not-placeholder-shown:-translate-y-1.5
           peer-not-placeholder-shown:text-neutral-400"
-                      >
+                      >Use
                         Email
                       </label>
                     </div>

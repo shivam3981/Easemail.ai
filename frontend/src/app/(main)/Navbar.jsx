@@ -35,14 +35,14 @@ const Navbar = () => {
             <div className="flex items-center gap-x-1 lg:gap-x-2 ms-auto py-1 lg:ps-6 lg:order-3 lg:col-span-3">
               {user ? (
                 <>
-                  <Link 
-                    href="/dashboard" 
-                    className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+                  <Link
+                    href="/dashboard"
+                    className="text-gray-700  hover:text-blue-600 px-3 py-2 rounded-md text-2xl font-bold"
                   >
                     Dashboard
                   </Link>
                   <div className="relative group">
-                    <button 
+                    <button
                       className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 focus:outline-none"
                       onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
@@ -61,7 +61,7 @@ const Navbar = () => {
                       )}
                       <span className="text-sm font-medium">{user.displayName}</span>
                     </button>
-                    
+
                     {/* Dropdown Menu */}
                     {isMenuOpen && (
                       <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">

@@ -120,7 +120,11 @@ export default function ComposePage() {
                 />
               </TabsContent>
               <TabsContent value="advanced">
-                <EmailGenerator />
+                <EmailGenerator
+                  onAddToMessage={html =>
+                    setFormData(prev => ({ ...prev, body: html }))
+                  }
+                />
               </TabsContent>
             </Tabs>
           </div>
@@ -170,7 +174,7 @@ export default function ComposePage() {
               </div>
 
               <div className="mb-6">
-                <label htmlFor="body" className="block text-slate-200 font-medium mb-2">
+                <label htmlFor="body" className=" text-black font-medium mb-2">
                   Message:
                 </label>
                 <textarea

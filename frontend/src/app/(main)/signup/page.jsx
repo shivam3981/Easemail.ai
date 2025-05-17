@@ -1,6 +1,6 @@
 'use client';
 import { useFormik } from 'formik';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { TailChase } from 'ldrs/react';
 import 'ldrs/react/TailChase.css'
@@ -28,6 +28,8 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Signup = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const signupForm = useFormik({
     initialValues: {
@@ -163,20 +165,35 @@ const Signup = () => {
                   }
                 </div>
                 {/* End Form Group */}
-                {/* Form Group */}
+                {/* Password Field */}
                 <div>
                   <label htmlFor="password" className="block text-sm mb-2">Password</label>
                   <div className="relative">
-                    <input type="password"
+                    <input
+                      type={showPassword ? "text" : "password"}
                       id="password"
                       onChange={signupForm.handleChange}
                       value={signupForm.values.password}
-                      className="py-2.5 sm:py-3 px-4 block w-full border border-gray-800 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="password-error" />
-                    <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
-                      <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                      </svg>
-                    </div>
+                      className="py-2.5 sm:py-3 px-4 block w-full border border-gray-800 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                      required
+                      aria-describedby="password-error"
+                    />
+                    <button
+                      type="button"
+                      tabIndex={-1}
+                      className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                      {showPassword ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.657.403-3.221 1.125-4.575M15 12a3 3 0 11-6 0 3 3 0 016 0zm6.364-2.364A9.956 9.956 0 0021 12c0 5.523-4.477 10-10 10-1.657 0-3.221-.403-4.575-1.125M9.88 9.88a3 3 0 014.24 4.24" />
+                        </svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm6.364-2.364A9.956 9.956 0 0021 12c0 5.523-4.477 10-10 10-1.657 0-3.221-.403-4.575-1.125" />
+                        </svg>
+                      )}
+                    </button>
                   </div>
                   {
                     (signupForm.touched.password && signupForm.errors) && (
@@ -186,22 +203,37 @@ const Signup = () => {
                     )
                   }
                 </div>
-                {/* End Form Group */}
+                {/* End Password Field */}
 
-                {/* Form Group */}
+                {/* Confirm Password Field */}
                 <div>
                   <label htmlFor="confirm-password" className="block text-sm mb-2">Confirm Password</label>
                   <div className="relative">
-                    <input type="password"
+                    <input
+                      type={showConfirm ? "text" : "password"}
                       id="ConfirmPassword"
                       onChange={signupForm.handleChange}
                       value={signupForm.values.ConfirmPassword}
-                      className="py-2.5 sm:py-3 px-4 block w-full border border-gray-800 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="confirm-password-error" />
-                    <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
-                      <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                      </svg>
-                    </div>
+                      className="py-2.5 sm:py-3 px-4 block w-full border border-gray-800 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                      required
+                      aria-describedby="confirm-password-error"
+                    />
+                    <button
+                      type="button"
+                      tabIndex={-1}
+                      className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500"
+                      onClick={() => setShowConfirm((prev) => !prev)}
+                    >
+                      {showConfirm ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.657.403-3.221-.403-4.575M15 12a3 3 0 11-6 0 3 3 0 016 0zm6.364-2.364A9.956 9.956 0 0021 12c0 5.523-4.477 10-10 10-1.657 0-3.221-.403-4.575-1.125" />
+                        </svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm6.364-2.364A9.956 9.956 0 0021 12c0 5.523-4.477 10-10 10-1.657 0-3.221-.403-4.575-1.125" />
+                        </svg>
+                      )}
+                    </button>
                   </div>
                   {
                     (signupForm.touched.ConfirmPassword && signupForm.errors) && (
@@ -211,7 +243,7 @@ const Signup = () => {
                     )
                   }
                 </div>
-                {/* End Form Group */}
+                {/* End Confirm Password Field */}
 
                 {/* Checkbox */}
                 <div className="flex items-center">

@@ -6,11 +6,14 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { TailChase } from 'ldrs/react';
+import 'ldrs/react/TailChase.css';
 
 const Login = () => {
   const { login } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -99,7 +102,92 @@ const Login = () => {
 
               <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">Or</div>
 
-          
+              {/* Manual Sign In Form */}
+              <form onSubmit={formik.handleSubmit}>
+                <div className="grid gap-y-4">
+                  {/* Email Field */}
+                  <div>
+                    <label htmlFor="email" className="block text-sm mb-2">
+                      Email address
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.email}
+                        className="py-2.5 sm:py-3 px-4 block w-full border border-gray-800 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                        required
+                        aria-describedby="email-error"
+                      />
+                    </div>
+                    {formik.touched.email && formik.errors.email && (
+                      <p className="text-xs text-red-600 mt-2" id="email-error">
+                        {formik.errors.email}
+                      </p>
+                    )}
+                  </div>
+                  {/* Password Field */}
+                  <div>
+                    <label htmlFor="password" className="block text-sm mb-2">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.password}
+                        className="py-2.5 sm:py-3 px-4 block w-full border border-gray-800 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                        required
+                        aria-describedby="password-error"
+                      />
+                      <button
+                        type="button"
+                        tabIndex={-1}
+                        className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.657.403-3.221 1.125-4.575M15 12a3 3 0 11-6 0 3 3 0 016 0zm6.364-2.364A9.956 9.956 0 0021 12c0 5.523-4.477 10-10 10-1.657 0-3.221-.403-4.575-1.125M9.88 9.88a3 3 0 014.24 4.24" />
+                          </svg>
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm6.364-2.364A9.956 9.956 0 0021 12c0 5.523-4.477 10-10 10-1.657 0-3.221-.403-4.575-1.125" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                    {formik.touched.password && formik.errors.password && (
+                      <p className="text-xs text-red-600 mt-2" id="password-error">
+                        {formik.errors.password}
+                      </p>
+                    )}
+                  </div>
+                  {/* Sign In Button */}
+                  <button
+                    disabled={isLoading || formik.isSubmitting}
+                    type="submit"
+                    className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                  >
+                    {formik.isSubmitting || isLoading ? (
+                      <TailChase
+                        size="40"
+                        strokeLength="0.15"
+                        bgOpacity="0.1"
+                        speed="1.4"
+                        color="black"
+                      />
+                    ) : "Sign In"}
+                  </button>
+                </div>
+              </form>
+              {/* End Manual Sign In Form */}
             </div>
           </div>
         </div>

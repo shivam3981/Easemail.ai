@@ -522,6 +522,11 @@ ${formData.emailType === "holiday" ? "- Capture the seasonal spirit." : ""}
 </html>`
   }
 
+  const handleAddToMessage = (html) => {
+    // Implement your logic here, e.g., paste HTML into a message editor or log it
+    console.log("HTML to add to message:", html);
+  };
+
   return (
     <div className="container mx-auto px-2 sm:px-4 py-6 sm:py-8 max-w-full min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800">
       <div className="flex flex-col items-center mb-8 text-center">
@@ -860,6 +865,7 @@ ${formData.emailType === "holiday" ? "- Capture the seasonal spirit." : ""}
                       <Mail className="h-4 w-4" />
                       Copy for Email Client
                     </Button>
+                    
                     {/* Add to Message Button */}
                     {typeof onAddToMessage === "function" && (
                       <Button
@@ -982,3 +988,5 @@ const templateStyles = {
     contentColor: "#444",
   },
 }
+
+

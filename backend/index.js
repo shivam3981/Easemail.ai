@@ -21,7 +21,7 @@ app.use(cors({
   origin: function(origin, callback) {
     const allowedOrigins = [
     
-      '*',
+      '*','https://easemail-ai-1n8q.vercel.app'
     ];
     // credentials: true
     if (!origin || allowedOrigins.includes(origin)) {
@@ -67,7 +67,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/email', emailRoutes);
 
 // Health check endpoint
-app.get('/', (req, res) => { 
+app.get('/', (req, res) => { ``
   res.json({ status: 'ok', message: 'Server is running' }); 
 });
 

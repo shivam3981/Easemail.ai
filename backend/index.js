@@ -9,8 +9,8 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const UserRouter = require('./routers/UserRouter');
-const authRoutes = require('./routes/auth');
-const emailRoutes = require('./routes/email');
+const authRouter = require('./routers/auth');
+const emailRouter = require('./routers/email');
 
 // initialize express
 const app = express();
@@ -20,10 +20,8 @@ const port = process.env.PORT || 5000;
 app.use(cors({
   origin: function(origin, callback) {
     const allowedOrigins = [
-    
-      '*','https://easemail-ai-1n8q.vercel.app'
+      'https://easemail-ai-1n8q.vercel.app'
     ];
-    // credentials: true
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -60,14 +58,22 @@ require('./config/passport');
 app.set('trust proxy', 1);
 
 // Connect to MongoDB
-
+mongoose.connect(process.env.MONGO_URI || process.env.DB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB connected'))
+.catch((err) => {
+  console.error('MongoDB connection error:', err);
+  process.exit(1);
+});
 
 app.use('/user', UserRouter);
-app.use('/api/auth', authRoutes);
-app.use('/api/email', emailRoutes);
+app.use('/api/auth', authRouter);
+app.use('/api/email', emailRouter);
 
 // Health check endpoint
-app.get('/', (req, res) => { ``
+app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running' }); 
 });
 

@@ -79,7 +79,7 @@ const EmailGeneratorSimple = ({ onAddToMessage }) => {
 
             // Wrap the generated content in a basic HTML structure
             const formattedEmail = `
-    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #222;">
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #fff;">
         <h1 style="color: #38bdf8;">Generated Email</h1>
         <p>${generatedContent.replace(/\n/g, "<br />")}</p>
     </div>
@@ -200,8 +200,12 @@ const EmailGeneratorSimple = ({ onAddToMessage }) => {
                                             <Button
                                                 variant="outline"
                                                 size="sm"
-                                                // Use plain text instead of HTML
-                                                onClick={() => onAddToMessage((generatedEmail))}
+                                                // Convert white text to black before adding to message
+                                                onClick={() =>
+                                                    onAddToMessage(
+                                                        generatedEmail.replace(/color:\s*#fff;?/gi, "color: #222;")
+                                                    )
+                                                }
                                                 className="flex items-center gap-2 border-green-500 text-green-400 hover:bg-green-900 hover:text-white"
                                             >
                                                 Add to Message

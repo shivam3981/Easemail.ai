@@ -2,10 +2,10 @@ import { IconBrandFacebook, IconBrandGithub, IconBrandTwitter, IconCopyright } f
 import Link from 'next/link';
 import React from 'react'
 
-const footer = () => {
+const Footer = () => {
     return (
-        <div className="flex flex-col">
-            <footer className="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto bg-[#18181b] text-gray-200 border-t border-gray-800">
+        <div className="flex flex-col bg-[#18181b]">
+            <footer className="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto text-gray-200 border-t border-gray-800">
                 {/* Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-5">
                     <div>
@@ -78,4 +78,4 @@ const footer = () => {
     )
 }
 
-export default footer;
+export default Footer;

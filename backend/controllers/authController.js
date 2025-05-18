@@ -21,7 +21,6 @@ exports.googleCallback = (req, res) => {
       path: '/'
     });
     
-    // Try redirecting to simpler token-handler page to avoid Suspense issues
     res.redirect(`${process.env.CLIENT_URL}/token-handler?token=${token}`);
   } catch (error) {
     console.error('Google callback error:', error);

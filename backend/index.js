@@ -20,10 +20,10 @@ const port = process.env.PORT || 5000;
 app.use(cors({
   origin: function(origin, callback) {
     const allowedOrigins = [
-      
-      process.env.CLIENT_URL,
-      'http://localhost:3000'
+    
+      '*',
     ];
+    // credentials: true
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {

@@ -280,6 +280,23 @@ export default function EmailGenerator() {
     toast.success("HTML file downloaded successfully.")
   }
 
+  // Add this function to handle saving the generated email to your backend
+  const saveGeneratedEmail = async () => {
+    if (!generatedEmail) return;
+    try {
+      const res = await fetch("http://localhost:5000/api/email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(generatedEmail),
+      });
+      if (!res.ok) throw new Error("Failed to save email");
+      toast.success("Email saved successfully!");
+    } catch (err) {
+      toast.error("Failed to save email. Please try again.");
+      console.error(err);
+    }
+  };
+
   // Creates a simplified rich text version that can be pasted into email clients
   const generateRichTextForEmailClients = (data, themeIndex) => {
     const styles = templateStyles[data.emailType]
@@ -727,6 +744,15 @@ export default function EmailGenerator() {
                         <Mail className="h-4 w-4" />
                         Copy for Email Client
                       </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={saveGeneratedEmail}
+                        className="flex items-center gap-2"
+                      >
+                        <Download className="h-4 w-4" />
+                        Save
+                      </Button>
                     </div>
                   </div>
                   <EmailPreview data={generatedEmail} selectedTheme={selectedTheme} bgImage={bgImage} />
@@ -872,4 +898,13 @@ const templateStyles = {
     subheaderColor: "#666",
     contentColor: "#444",
   },
+}
+
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+  // Here you would save the email to a database or file
+  // For now, just return success
+  return res.status(200).json({ message: "Email saved!" });
 }

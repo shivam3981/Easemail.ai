@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
@@ -6,7 +7,6 @@ import { TailChase } from 'ldrs/react';
 import 'ldrs/react/TailChase.css'
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Router } from 'next/router';
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -30,6 +30,7 @@ const SignupSchema = Yup.object().shape({
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const router = useRouter();
 
   const signupForm = useFormik({
     initialValues: {
@@ -47,7 +48,7 @@ const Signup = () => {
         console.log(res.statusText);
         toast.success("User registered successfully") 
         resetForm();
-        Router.push('/login');
+        router.push('/login');
       } catch (error) {
         console.log(error);
         setSubmitting(false);
@@ -183,14 +184,18 @@ const Signup = () => {
                       tabIndex={-1}
                       className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500"
                       onClick={() => setShowPassword((prev) => !prev)}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
                     >
                       {showPassword ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.657.403-3.221 1.125-4.575M15 12a3 3 0 11-6 0 3 3 0 016 0zm6.364-2.364A9.956 9.956 0 0021 12c0 5.523-4.477 10-10 10-1.657 0-3.221-.403-4.575-1.125M9.88 9.88a3 3 0 014.24 4.24" />
+                        // Eye icon (show password)
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12C3.5 7.5 7.5 4.5 12 4.5c4.5 0 8.5 3 9.75 7.5-1.25 4.5-5.25 7.5-9.75 7.5-4.5 0-8.5-3-9.75-7.5z" />
+                          <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.5" fill="none"/>
                         </svg>
                       ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm6.364-2.364A9.956 9.956 0 0021 12c0 5.523-4.477 10-10 10-1.657 0-3.221-.403-4.575-1.125" />
+                        // Eye-off icon (hide password)
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A9.77 9.77 0 002.25 12c1.25 4.5 5.25 7.5 9.75 7.5 1.61 0 3.14-.31 4.52-.877M6.53 6.53A9.77 9.77 0 0112 4.5c4.5 0 8.5 3 9.75 7.5a9.77 9.77 0 01-1.272 2.545M15 12a3 3 0 11-6 0 3 3 0 016 0zm-9 9l18-18" />
                         </svg>
                       )}
                     </button>
@@ -223,14 +228,18 @@ const Signup = () => {
                       tabIndex={-1}
                       className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500"
                       onClick={() => setShowConfirm((prev) => !prev)}
+                      aria-label={showConfirm ? "Hide password" : "Show password"}
                     >
                       {showConfirm ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.657.403-3.221-.403-4.575M15 12a3 3 0 11-6 0 3 3 0 016 0zm6.364-2.364A9.956 9.956 0 0021 12c0 5.523-4.477 10-10 10-1.657 0-3.221-.403-4.575-1.125" />
+                        // Eye icon (show password)
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12C3.5 7.5 7.5 4.5 12 4.5c4.5 0 8.5 3 9.75 7.5-1.25 4.5-5.25 7.5-9.75 7.5-4.5 0-8.5-3-9.75-7.5z" />
+                          <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.5" fill="none"/>
                         </svg>
                       ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm6.364-2.364A9.956 9.956 0 0021 12c0 5.523-4.477 10-10 10-1.657 0-3.221-.403-4.575-1.125" />
+                        // Eye-off icon (hide password)
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A9.77 9.77 0 002.25 12c1.25 4.5 5.25 7.5 9.75 7.5 1.61 0 3.14-.31 4.52-.877M6.53 6.53A9.77 9.77 0 0112 4.5c4.5 0 8.5 3 9.75 7.5a9.77 9.77 0 01-1.272 2.545M15 12a3 3 0 11-6 0 3 3 0 016 0zm-9 9l18-18" />
                         </svg>
                       )}
                     </button>

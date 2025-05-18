@@ -13,7 +13,6 @@ const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 function formatHtmlCode(emailHtml) {
-    // Reference: Use a proper HTML template as in email-generator.jsx
     return `<!DOCTYPE html>
 <html>
 <head>
@@ -21,17 +20,17 @@ function formatHtmlCode(emailHtml) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Generated Email</title>
 <style>
-    body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #fff; }
     .container { max-width: 600px; margin: 0 auto; }
     .email-content { 
-    padding: 30px; 
-    background-color: #1e293b;
-    color: #e0e6ed;
-    border-radius: 8px;
+        padding: 30px; 
+        background-color: #fff;
+        color: #222;
+        border-radius: 8px;
     }
-    .header { font-size: 24px; font-weight: bold; color: #38bdf8; }
-    .subheader { font-size: 18px; color: #7dd3fc; margin-top: 10px; }
-    .content { margin-top: 20px; color: #e0e6ed; line-height: 1.6; }
+    .header { font-size: 24px; font-weight: bold; color: #2563eb; }
+    .subheader { font-size: 18px; color: #3b82f6; margin-top: 10px; }
+    .content { margin-top: 20px; color: #222; line-height: 1.6; }
 </style>
 </head>
 <body>
@@ -39,7 +38,7 @@ function formatHtmlCode(emailHtml) {
     <div class="email-content">
 ${emailHtml
             .replace(/^\s+|\s+$/g, "")
-            .replace(/<div[^>]*>|<\/div>/g, "") // Remove outer div if present
+            .replace(/<div[^>]*>|<\/div>/g, "")
             .replace(/<h1[^>]*>/g, '<h1 class="header">')
             .replace(/<p[^>]*>/g, '<div class="content">')
             .replace(/<\/p>/g, '</div>')
@@ -80,11 +79,11 @@ const EmailGeneratorSimple = ({ onAddToMessage }) => {
 
             // Wrap the generated content in a basic HTML structure
             const formattedEmail = `
-        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #e0e6ed;">
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #222;">
         <h1 style="color: #38bdf8;">Generated Email</h1>
         <p>${generatedContent.replace(/\n/g, "<br />")}</p>
-        </div>
-    `;
+    </div>
+`;
 
             setGeneratedEmail(formattedEmail);
             toast.success("Email generated successfully!");

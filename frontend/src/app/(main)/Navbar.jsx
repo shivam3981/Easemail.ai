@@ -89,15 +89,16 @@ const Navbar = () => {
                 <>
                   <Link
                     href="/login"
-                    className="text-white hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+                    className="bg-white text-black hover:bg-black hover:text-white px-3 py-2 rounded-xl text-sm font-medium transition-colors duration-200"
+
                   >
-                    Sign in
+                    Login
                   </Link>
                   <Link
                     href="/signup"
-                    className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium"
+                    className="bg-white text-black hover:bg-black hover:text-white px-3 py-2 rounded-xl text-sm font-medium transition-colors duration-200"
                   >
-                    Sign up
+                    SignUp
                   </Link>
                 </>
               )}

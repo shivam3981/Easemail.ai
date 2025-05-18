@@ -18,6 +18,11 @@ const UserSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   photo: String,
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  },
   googleTokens: {
     access_token: String,
     refresh_token: String,

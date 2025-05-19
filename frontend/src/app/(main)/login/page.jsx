@@ -14,6 +14,7 @@ const Login = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState('user'); // NEW: role state
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -49,13 +50,25 @@ const Login = () => {
     onSubmit: async (values) => {
       setIsLoading(true);
       try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/authenticate`, values);
+        // Choose endpoint based on role
+        const endpoint =
+          role === 'admin'
+            ? `${process.env.NEXT_PUBLIC_API_URL}/admin/authenticate`
+            : `${process.env.NEXT_PUBLIC_API_URL}/user/authenticate`;
+
+        const response = await axios.post(endpoint, values);
         const { token, user } = response.data;
-        
+
         // Use the login function from auth context
         await login(token, user);
         toast.success("Login Successful");
-        router.push('/user/compose');
+
+        // Redirect based on role
+        if (role === 'admin') {
+          router.push('/admin/home');
+        } else {
+          router.push('/user/compose');
+        }
       } catch (err) {
         console.error(err);
         toast.error(err.response?.data?.message || "Login Failed. Please check your credentials.");
@@ -101,6 +114,24 @@ const Login = () => {
               </button>
 
               <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">Or</div>
+
+              {/* Role Selector */}
+              <div className="mb-4">
+                <label htmlFor="role" className="block text-sm mb-2">
+                  Login as
+                </label>
+                <select
+                  id="role"
+                  name="role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="py-2.5 px-4 block w-full border border-gray-800 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
+                >
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              {/* End Role Selector */}
 
               {/* Manual Sign In Form */}
               <form onSubmit={formik.handleSubmit}>

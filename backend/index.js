@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const UserRouter = require('./routers/UserRouter');
 const authRouter = require('./routers/auth');
 const emailRouter = require('./routers/email');
+const authRoutes = require('./routes/auth');
 
 // initialize express
 const app = express();
@@ -58,7 +59,7 @@ require('./config/passport');
 app.set('trust proxy', 1);
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI || process.env.DB_URL, {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/easemail', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -71,6 +72,7 @@ mongoose.connect(process.env.MONGO_URI || process.env.DB_URL, {
 app.use('/user', UserRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/email', emailRouter);
+app.use('/api', authRoutes);
 
 // Health check endpoint
 app.get('/', (req, res) => {

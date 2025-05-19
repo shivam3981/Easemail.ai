@@ -1,12 +1,23 @@
-const {Schema, model } = require('../connection');
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
-const mySchema = new Schema({
-    name: String,
-    email: {type:String, unique:true},
-    password: {type:String, required:true},
-    city : {type:String, default: 'Unknown'},
-    createdAt: {type:Date, default:Date.now},
+const userSchema = new mongoose.Schema({
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: { type: String, enum: ['user', 'admin'], default: 'user' }
 });
 
-module.exports = model('users', mySchema);
+// Hash password before saving
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+});
+
+// Password check method
+userSchema.methods.comparePassword = function (candidatePassword) {
+    return bcrypt.compare(candidatePassword, this.password);
+};
+
+// module.exports = mongoose.model('User', userSchema);
 

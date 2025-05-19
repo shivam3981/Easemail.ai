@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
-import { Loader2, Copy, Check, Upload, Sparkles, RefreshCw, Download, Mail } from "lucide-react"
+import { Loader2, Copy, Check, Upload, Sparkles, RefreshCw, Download, Mail, Edit2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import EmailPreview from "@/components/email-preview"
 import { templates, colorThemes } from "@/lib/email-data"
@@ -48,6 +48,72 @@ export default function EmailGenerator({ onAddToMessage }) {
   const [activeTab, setActiveTab] = useState("design")
   const [logoPreview, setLogoPreview] = useState(null)
   const [recipients, setRecipients] = useState(""); // New state for recipients
+  const [isEditing, setIsEditing] = useState(false);
+  const [editContent, setEditContent] = useState("");
+
+  // Helper to extract plain text from generatedEmail for editing
+  function extractPlainTextFromGeneratedEmail(emailObj) {
+    if (!emailObj) return "";
+    // Combine header, subheader, mainContent, bullets, and footer for editing
+    let text = "";
+    if (emailObj.headerText) text += emailObj.headerText + "\n\n";
+    if (emailObj.subheaderText) text += emailObj.subheaderText + "\n\n";
+    if (emailObj.mainContent) text += emailObj.mainContent + "\n\n";
+    if (emailObj.bullets && emailObj.bullets.length)
+      text += emailObj.bullets.map(b => `• ${b}`).join("\n") + "\n\n";
+    if (emailObj.footerText) text += emailObj.footerText;
+    return text.trim();
+  }
+
+  // Helper to update generatedEmail from edited plain text
+  function updateGeneratedEmailFromEdit(plainText) {
+    // Simple split: header, subheader, main, bullets, footer
+    const lines = plainText.split("\n");
+    let headerText = "";
+    let subheaderText = "";
+    let mainContent = "";
+    let bullets = [];
+    let footerText = "";
+    let state = "header";
+    for (let line of lines) {
+      if (state === "header" && line.trim()) {
+        headerText = line.trim();
+        state = "subheader";
+        continue;
+      }
+      if (state === "subheader" && line.trim()) {
+        subheaderText = line.trim();
+        state = "main";
+        continue;
+      }
+      if (state === "main") {
+        if (line.trim().startsWith("•")) {
+          state = "bullets";
+        } else if (line.trim()) {
+          mainContent += (mainContent ? "\n" : "") + line.trim();
+          continue;
+        }
+      }
+      if (state === "bullets") {
+        if (line.trim().startsWith("•")) {
+          bullets.push(line.replace(/^•\s*/, ""));
+        } else if (line.trim()) {
+          footerText = line.trim();
+          state = "footer";
+        }
+      } else if (state === "footer" && line.trim()) {
+        footerText += (footerText ? "\n" : "") + line.trim();
+      }
+    }
+    setGeneratedEmail({
+      ...generatedEmail,
+      headerText,
+      subheaderText,
+      mainContent,
+      bullets,
+      footerText,
+    });
+  }
 
   // Set generated email when form data changes to ensure preview updates
   useEffect(() => {
@@ -865,7 +931,19 @@ ${formData.emailType === "holiday" ? "- Capture the seasonal spirit." : ""}
                       <Mail className="h-4 w-4" />
                       Copy for Email Client
                     </Button>
-                    
+                    {/* Edit Button */}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setEditContent(extractPlainTextFromGeneratedEmail(generatedEmail));
+                        setIsEditing(true);
+                      }}
+                      className="flex items-center gap-2 border-yellow-500 text-yellow-400 hover:bg-yellow-900 hover:text-white"
+                    >
+                      <Edit2 className="h-4 w-4" />
+                      Edit
+                    </Button>
                     {/* Add to Message Button */}
                     {typeof onAddToMessage === "function" && (
                       <Button
@@ -880,7 +958,40 @@ ${formData.emailType === "holiday" ? "- Capture the seasonal spirit." : ""}
                   </div>
                 </div>
                 <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-3 sm:p-6 overflow-x-auto">
-                  <EmailPreview data={generatedEmail} selectedTheme={selectedTheme} bgImage={bgImage} />
+                  {isEditing ? (
+                    <div className="space-y-4">
+                      <Textarea
+                        value={editContent}
+                        onChange={e => setEditContent(e.target.value)}
+                        rows={10}
+                        className="resize-none bg-slate-800 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:ring-yellow-500"
+                      />
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={() => {
+                            updateGeneratedEmailFromEdit(editContent);
+                            setIsEditing(false);
+                            toast.success("Email updated!");
+                          }}
+                          className="bg-yellow-500 text-white hover:bg-yellow-600"
+                        >
+                          Save Changes
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => setIsEditing(false)}
+                          className="border-slate-500 text-slate-300 hover:bg-slate-800"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    // Highlight the preview with a border and subtle shadow
+                    <div className="rounded-xl border-4 border-sky-500/70 shadow-[0_0_0_4px_rgba(56,189,248,0.10)] bg-white/90 p-2 sm:p-6 transition-all duration-200">
+                      <EmailPreview data={generatedEmail} selectedTheme={selectedTheme} bgImage={bgImage} />
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

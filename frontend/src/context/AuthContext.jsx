@@ -25,14 +25,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Save token to localStorage
-  const saveToken = (newToken) => {
-    if (typeof window !== 'undefined' && newToken) {
-      localStorage.setItem('authToken', newToken);
-      setToken(newToken);
-      return true;
-    }
-    return false;
-  };
+  // const saveToken = (newToken) => {
+  //   if (typeof window !== 'undefined' && newToken) {
+  //     localStorage.setItem('authToken', newToken);
+  //     setToken(newToken);
+  //     return true;
+  //   }
+  //   return false;
+  // };
 
   // Configure axios interceptor for token
   useEffect(() => {

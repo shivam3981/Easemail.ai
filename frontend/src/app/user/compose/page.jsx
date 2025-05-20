@@ -12,6 +12,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 export default function ComposePage() {
   // const { user, loading } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('user');
+    if (!token) {
+      router.push('/login');
+    }
+  }, [router]);
+
+
   const [formData, setFormData] = useState({
     to: '',
     subject: '',

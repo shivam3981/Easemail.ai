@@ -53,7 +53,9 @@ const Login = () => {
         const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/user/authenticate`;
 
         const response = await axios.post(endpoint, values);
-        const { token, user } = response.data;
+        const { token, user } = response.data.token;
+
+        console.log('Login response:', response.data);
 
         // Use the login function from auth context
         await login(token, user);

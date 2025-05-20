@@ -43,6 +43,7 @@ export function AuthProvider({ children }) {
       throw new Error('Invalid token');
     }
     localStorage.setItem('token', token);
+    localStorage.setItem('authToken', token);
     localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
   };
@@ -58,7 +59,7 @@ export function AuthProvider({ children }) {
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      localStorage.removeItem('token');
+      localStorage.removeItem('authToken');
       localStorage.removeItem('user');
       setUser(null);
       router.push('/login');

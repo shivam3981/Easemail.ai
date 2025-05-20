@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -19,6 +19,10 @@ const Navbar = () => {
       console.error('Logout error:', error);
     }
   };
+
+  const user = localStorage.getItem('user');
+
+  console.log(user);
 
   return (
     <div className=" bg-gray-900 bg-linear-to-b from-violet-900/10 via-transparent">

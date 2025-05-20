@@ -160,7 +160,7 @@ export default function AdminDashboard() {
   const [selected, setSelected] = useState("dashboard");
 
   useEffect(() => {
-    fetch('http://localhost:5000/user/getall')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/getall`)
       .then(res => res.json())
       .then(data => {
         setUsers(data);
@@ -178,7 +178,7 @@ export default function AdminDashboard() {
         });
       });
 
-    fetch('http://localhost:5000/email/stats')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/email/stats`)
       .then(res => res.json())
       .then(stats => {
         // stats should be an array of { name, generated }

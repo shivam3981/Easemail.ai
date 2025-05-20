@@ -43,7 +43,7 @@ const Navbar = () => {
                     href="/dashboard"
                     className="text-gray-700  hover:text-blue-600 px-3 py-2 rounded-md text-2xl font-bold"
                   >
-                    Dashboard
+                    {/* Dashboard */}
                   </Link>
                   <div className="relative group">
                     <button

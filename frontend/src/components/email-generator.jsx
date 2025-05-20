@@ -861,7 +861,7 @@ ${formData.emailType === "holiday" ? "- Capture the seasonal spirit." : ""}
                   </div>
                 </div>
 
-                <div>
+                {/* <div>
                   <Label htmlFor="recipients" className="text-slate-200">Recipients</Label>
                   <Textarea
                     id="recipients"
@@ -871,7 +871,7 @@ ${formData.emailType === "holiday" ? "- Capture the seasonal spirit." : ""}
                     rows={2}
                     className="mt-1.5 resize-none bg-slate-800 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:ring-sky-500"
                   />
-                </div>
+                </div> */}
 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
                   <Button
@@ -901,13 +901,13 @@ ${formData.emailType === "holiday" ? "- Capture the seasonal spirit." : ""}
                     Reset
                   </Button>
 
-                  <Button
+                  {/* <Button
                     onClick={sendEmail}
                     className="flex items-center gap-2 bg-gradient-to-r from-sky-700 to-cyan-600 text-white hover:from-sky-800 hover:to-cyan-700"
                   >
                     <Mail className="h-4 w-4" />
                     Send Email
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </CardContent>

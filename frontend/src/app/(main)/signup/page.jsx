@@ -70,7 +70,7 @@ const Signup = () => {
     if (token) {
       localStorage.setItem('user', token);
       toast.success('Signup Successful');
-      window.location.href = '/';
+      window.location.href = '/dashboard';
     }
   }, []);
 

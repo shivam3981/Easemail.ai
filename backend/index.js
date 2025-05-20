@@ -21,7 +21,7 @@ const port = process.env.PORT || 5000;
 app.use(cors({
   origin: function(origin, callback) {
     const allowedOrigins = [
-      '*','https://easemail-ai-1n8q.vercel.app'
+      'http://localhost:3000','https://easemail-ai.vercel.app'
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);

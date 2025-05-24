@@ -17,6 +17,8 @@ import { templates, colorThemes } from "@/lib/email-data"
 import { toast } from "react-hot-toast"
 
 // Initialize the Gemini API with your API key
+
+
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY)
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
 

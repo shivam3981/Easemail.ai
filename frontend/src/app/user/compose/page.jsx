@@ -10,6 +10,7 @@ import EmailGeneratorSimple from '@/components/email-generator-simple';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'; // Import Tabs components
 
 export default function ComposePage() {
+  // console.log(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
   // const { user, loading } = useAuth();
   const router = useRouter();
   const [formData, setFormData] = useState({

@@ -49,13 +49,20 @@ const Login = () => {
     onSubmit: async (values) => {
       setIsLoading(true);
       try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/authenticate`, values);
-        const { token, user } = response.data;
-        
+        // Always use user endpoint for simple login
+        const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/user/authenticate`;
+
+        const response = await axios.post(endpoint, values);
+        const { token, user } = response.data.token;
+
+        console.log('Login response:', response.data);
+
         // Use the login function from auth context
         await login(token, user);
         toast.success("Login Successful");
-        router.push('/user/compose');
+
+        // Redirect to dashboard or user home
+        router.push('/');
       } catch (err) {
         console.error(err);
         toast.error(err.response?.data?.message || "Login Failed. Please check your credentials.");

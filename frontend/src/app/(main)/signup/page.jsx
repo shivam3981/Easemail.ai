@@ -59,7 +59,8 @@ const Signup = () => {
   });
 
   const handleGoogleSignup = () => {
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/google`;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    window.location.href = `${apiUrl}/api/auth/google`;
   };
 
   useEffect(() => {
@@ -69,7 +70,7 @@ const Signup = () => {
     if (token) {
       localStorage.setItem('user', token);
       toast.success('Signup Successful');
-      window.location.href = '/dashboard';
+      window.location.href = '/';
     }
   }, []);
 

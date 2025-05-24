@@ -20,7 +20,7 @@ function formatHtmlCode(emailHtml) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Generated Email</title>
+<title></title>
 <style>
     body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #fff; }
     .container { max-width: 600px; margin: 0 auto; }
@@ -66,6 +66,8 @@ const EmailGeneratorSimple = ({ onAddToMessage }) => {
     const [loading, setLoading] = useState(false);
     const [activeTab, setActiveTab] = useState("design");
     const [copied, setCopied] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editContent, setEditContent] = useState("");
 
     const generateEmail = async () => {
         if (!prompt.trim()) {
@@ -81,8 +83,8 @@ const EmailGeneratorSimple = ({ onAddToMessage }) => {
 
             // Wrap the generated content in a basic HTML structure
             const formattedEmail = `
-    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #222;">
-        <h1 style="color: #38bdf8;">Generated Email</h1>
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #fff;">
+        <h1 style="color: #38bdf8;"></h1>
         <p>${generatedContent.replace(/\n/g, "<br />")}</p>
     </div>
 `;
@@ -197,13 +199,31 @@ const EmailGeneratorSimple = ({ onAddToMessage }) => {
                                             <Save className="h-4 w-4" />
                                             Save
                                         </Button>
+                                        {/* Edit Button */}
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => {
+                                                setEditContent(
+                                                    extractPlainText(generatedEmail)
+                                                );
+                                                setIsEditing(true);
+                                            }}
+                                            className="flex items-center gap-2 border-yellow-500 text-yellow-400 hover:bg-yellow-900 hover:text-white"
+                                        >
+                                            Edit
+                                        </Button>
                                         {/* Add to Message Button */}
                                         {onAddToMessage && (
                                             <Button
                                                 variant="outline"
                                                 size="sm"
-                                                // Use plain text instead of HTML
-                                                onClick={() => onAddToMessage((generatedEmail))}
+                                                // Convert white text to black before adding to message
+                                                onClick={() =>
+                                                    onAddToMessage(
+                                                        generatedEmail.replace(/color:\s*#fff;?/gi, "color: #222;")
+                                                    )
+                                                }
                                                 className="flex items-center gap-2 border-green-500 text-green-400 hover:bg-green-900 hover:text-white"
                                             >
                                                 Add to Message
@@ -211,11 +231,47 @@ const EmailGeneratorSimple = ({ onAddToMessage }) => {
                                         )}
                                     </div>
                                 </div>
-                                <div
-                                    className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-lg border border-slate-700 shadow-inner"
-                                    style={{ minHeight: "180px" }}
-                                    dangerouslySetInnerHTML={{ __html: generatedEmail }}
-                                />
+                                {/* Edit Mode */}
+                                {isEditing ? (
+                                    <div className="space-y-4">
+                                        <Textarea
+                                            value={editContent}
+                                            onChange={(e) => setEditContent(e.target.value)}
+                                            rows={8}
+                                            className="resize-none bg-slate-800 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:ring-yellow-500"
+                                        />
+                                        <div className="flex gap-2">
+                                            <Button
+                                                onClick={() => {
+                                                    // Update the generated email with edited content
+                                                    setGeneratedEmail(`
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #fff;">
+        <p>${editContent.replace(/\n/g, "<br />")}</p>
+    </div>
+                                                    `);
+                                                    setIsEditing(false);
+                                                    toast.success("Email updated!");
+                                                }}
+                                                className="bg-yellow-500 text-white hover:bg-yellow-600"
+                                            >
+                                                Save Changes
+                                            </Button>
+                                            <Button
+                                                variant="outline"
+                                                onClick={() => setIsEditing(false)}
+                                                className="border-slate-500 text-slate-300 hover:bg-slate-800"
+                                            >
+                                                Cancel
+                                            </Button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div
+                                        className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-lg border border-slate-700 shadow-inner"
+                                        style={{ minHeight: "180px" }}
+                                        dangerouslySetInnerHTML={{ __html: generatedEmail }}
+                                    />
+                                )}
                             </CardContent>
                         </Card>
                     )}

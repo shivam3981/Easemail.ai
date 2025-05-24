@@ -1,11 +1,14 @@
 import React from 'react'
 import Navbar from './Navbar';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 const Layout = ({ children }) => {
     return (
         <>
-            <Navbar />
-            {children}
+            <AuthProvider>
+                <Navbar />
+                {children}
+            </AuthProvider>
         </>
     )
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth } from '@/Context/AuthContext';
+// import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 // import Header from '@/components/Header';
@@ -13,6 +13,15 @@ export default function ComposePage() {
   // console.log(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
   // const { user, loading } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('user');
+    if (!token) {
+      router.push('/login');
+    }
+  }, [router]);
+
+
   const [formData, setFormData] = useState({
     to: '',
     subject: '',
@@ -53,7 +62,7 @@ export default function ComposePage() {
     setStatus({ type: '', message: '' });
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("user");
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/email/send`,
         formData,

@@ -9,8 +9,9 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const UserRouter = require('./routers/UserRouter');
+const authRouter = require('./routers/auth');
+const emailRouter = require('./routers/email');
 const authRoutes = require('./routes/auth');
-const emailRoutes = require('./routes/email');
 
 // initialize express
 const app = express();
@@ -20,9 +21,7 @@ const port = process.env.PORT || 5000;
 app.use(cors({
   origin: function(origin, callback) {
     const allowedOrigins = [
-      
-      process.env.CLIENT_URL,
-      'http://localhost:3000'
+      'http://localhost:3000','https://easemail-ai.vercel.app'
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -60,14 +59,23 @@ require('./config/passport');
 app.set('trust proxy', 1);
 
 // Connect to MongoDB
-
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/easemail', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB connected'))
+.catch((err) => {
+  console.error('MongoDB connection error:', err);
+  process.exit(1);
+});
 
 app.use('/user', UserRouter);
-app.use('/api/auth', authRoutes);
-app.use('/api/email', emailRoutes);
+app.use('/api/auth', authRouter);
+app.use('/api/email', emailRouter);
+app.use('/api', authRoutes);
 
 // Health check endpoint
-app.get('/', (req, res) => { 
+app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running' }); 
 });
 

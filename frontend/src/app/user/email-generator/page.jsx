@@ -286,7 +286,7 @@ export default function EmailGenerator() {
   const saveGeneratedEmail = async () => {
     if (!generatedEmail) return;
     try {
-      const res = await fetch("http://localhost:5000/api/email", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(generatedEmail),
@@ -902,7 +902,7 @@ const templateStyles = {
   },
 }
 
-export default async function handler(req, res) {
+export async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
